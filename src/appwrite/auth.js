@@ -10,6 +10,7 @@ export class AuthServices {
       .setProject(conf.appWriteProjectId);
     this.account = new Account(this.client);
   }
+  
   async createAccount({ email, password, name }) {
     try {
       const user = await this.account.create(ID.unique, email, password, name);
@@ -39,6 +40,7 @@ export class AuthServices {
     }
     return null;
   }
+
   async logout() {
     try {
       return await this.account.deleteSessions('all');
@@ -47,6 +49,7 @@ export class AuthServices {
     }
     return null;
   }
+
 }
 
 const AuthService = new AuthServices();
