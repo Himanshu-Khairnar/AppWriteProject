@@ -109,4 +109,12 @@ export class Services {
   async getFilePreview(fileId) {
     return await this.storage.getFilePreview(conf.appWriteBucketId, fileId);
   }
+  async getFileDownload(fileId) {
+    try {
+      return await this.storage.getFileDownload(conf.appWriteBucketId, fileId);
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }

@@ -10,7 +10,7 @@ export class AuthServices {
       .setProject(conf.appWriteProjectId);
     this.account = new Account(this.client);
   }
-  
+
   async createAccount({ email, password, name }) {
     try {
       const user = await this.account.create(ID.unique, email, password, name);
@@ -36,22 +36,21 @@ export class AuthServices {
     try {
       return await this.account.get();
     } catch (error) {
-      console.log("error in fetching current user",error);
+      console.log("error in fetching current user", error);
     }
     return null;
   }
 
   async logout() {
     try {
-      return await this.account.deleteSessions('all');
+      return await this.account.deleteSessions("all");
     } catch (error) {
-      console.log("error in logout",error);
+      console.log("error in logout", error);
     }
     return null;
   }
-
 }
 
 const AuthService = new AuthServices();
 
-export default AuthService
+export default AuthService;
