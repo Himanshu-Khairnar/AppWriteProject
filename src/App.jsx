@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import AuthService from "./appwrite/auth";
 import { Header, Footer } from "./components/index";
 import { Outlet } from "react-router-dom";
+import { login, logout } from "./store/authSlice";
 
 export default function App() {
   const [loading, setLoading] = React.useState(true);
@@ -22,7 +23,7 @@ export default function App() {
       })
       .finally(() => setLoading(false));
   }, []);
-  return !loading ? (
+  return (
     <div className="min-h-screen flex flex-wrap content-between bg-gray-400 ">
       <div className="w-full block">
         <Header />
@@ -33,5 +34,5 @@ export default function App() {
         <Footer />
       </div>
     </div>
-  ) : null;
+  );
 }
