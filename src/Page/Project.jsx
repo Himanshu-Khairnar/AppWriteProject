@@ -1,10 +1,10 @@
 import React from 'react'
 import Heading from '../components/Heading'
 
-export default function Home() {
+export default function Project() {
   return (
-    <div className='mt-10'> 
-      <Heading data={'THE BLOG'}/>
+    <div className='mt-10'>
+      <Heading data={"PROJECTS"}/>
     </div>
   )
 }
