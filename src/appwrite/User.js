@@ -13,7 +13,7 @@ export const login = async (email, password) => {
     return account.createEmailPasswordSession(email, password);
   } catch (error) {
     console.log(error);
-    throw new Error("Error in creating user", error.message);
+    throw new Error("Error in login user", error.message);
   }
 };
 
@@ -22,7 +22,7 @@ export const updateUser = async (email, password) => {
     return account.updateEmail(email, password);
   } catch (error) {
     console.log(error);
-    throw new Error("Error in creating user", error.message);
+    throw new Error("Error in updating user", error.message);
   }
 };
 
@@ -31,6 +31,6 @@ export const updatePassword = async (newpassword, oldpassword) => {
     return account.updatePassword(newpassword, oldpassword);
   } catch (error) {
     console.log(error);
-    throw new Error("Error in creating user", error.message);
+    throw new Error("Error in updating password", error.message);
   }
 };
