@@ -29,7 +29,7 @@ export default function NewsLetter() {
 
       <p className="text-gray-400">
         We care about your data in our{" "}
-        <span className="underline">privacy policy</span>
+        <span className="underline cursor-default">privacy policy</span>
       </p>
     </div>
   );

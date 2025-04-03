@@ -4,16 +4,20 @@ import Home from "./Page/Home";
 import Footer from "./components/Footer";
 import Project from "./Page/Project";
 import NewsLetter from "./Page/NewsLetter";
+import About from "./Page/About";
+
 export default function App() {
   return (
-    <div className="  bg-primaryBg text-white  min-h-screen  px-25 py-12 ">
+    <div className="bg-primaryBg text-white min-h-screen px-6 md:px-12 lg:px-24 py-12">
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/project" element={<Project />} />
-          <Route path="/news_letter" element={<NewsLetter />} />
-        </Routes>
+        
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/project" element={<Project />} />
+            <Route path="/news_letter" element={<NewsLetter />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
         <Footer />
       </BrowserRouter>
     </div>
