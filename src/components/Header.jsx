@@ -21,7 +21,7 @@ export default function Header() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between p-4">
+    <div className="flex flex-col lg:flex-row items-center justify-between ">
       <div className="flex justify-between w-full lg:w-auto items-center">
         <Link to={"/"}>
           <img src="blogger.png" className="h-12 w-12" />
@@ -32,9 +32,9 @@ export default function Header() {
         >
           <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
             {menuOpen ? (
-              <path d="M18 6L6 18M6 6l12 12"></path> // X icon when menu is open
+              <path d="M18 6L6 18M6 6l12 12"></path> 
             ) : (
-              <path d="M3 12h18M3 6h18M3 18h18"></path> // Hamburger icon when menu is closed
+              <path d="M3 12h18M3 6h18M3 18h18"></path>
             )}
           </svg>
         </button>
