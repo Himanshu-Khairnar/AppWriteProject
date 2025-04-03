@@ -7,7 +7,7 @@ export default function Header() {
     { name: "Blog", link: "/" },
     { name: "Projects", link: "/project" },
     { name: "About Us", link: "/about" },
-    { name: "Newsletter", link: "/news_letter" },
+    { name: "Newsletter", link: "/news_letter" }  ,
   ];
   const [searchData, setSearchData] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,13 +26,19 @@ export default function Header() {
         <Link to={"/"}>
           <img src="blogger.png" className="h-12 w-12" />
         </Link>
-        <button 
-          className="lg:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            stroke="currentColor"
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             {menuOpen ? (
-              <path d="M18 6L6 18M6 6l12 12"></path> 
+              <path d="M18 6L6 18M6 6l12 12"></path>
             ) : (
               <path d="M3 12h18M3 6h18M3 18h18"></path>
             )}
@@ -40,7 +46,11 @@ export default function Header() {
         </button>
       </div>
 
-      <div className={`${menuOpen ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row w-full lg:w-auto gap-5 items-center justify-center mt-4 lg:mt-0`}>
+      <div
+        className={`${
+          menuOpen ? "flex" : "hidden"
+        } lg:flex flex-col lg:flex-row w-full lg:w-auto gap-5 items-center justify-center mt-4 lg:mt-0`}
+      >
         {data.map((item) => (
           <NavLink
             key={item.name}
@@ -74,7 +84,12 @@ export default function Header() {
             className="h-10 w-10 p-2"
           />
         </div>
-        <img src="avatar.png" alt="" className="mt-4 lg:mt-0" />
+        <NavLink
+          to={"/login"}
+          className=" py-2 px-4  bg-primaryText rounded-lg w-full sm:w-auto"
+        >
+          Login
+        </NavLink>
       </div>
     </div>
   );
