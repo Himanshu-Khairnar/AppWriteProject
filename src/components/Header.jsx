@@ -20,6 +20,8 @@ export default function Header() {
     }
   };
 
+  
+
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between ">
       <div className="flex justify-between w-full lg:w-auto items-center">
