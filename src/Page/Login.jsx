@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { login } from "../appwrite/User";
 import { NavigationOff } from "lucide-react";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
-  const navigate  = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,13 +19,12 @@ export default function Login() {
       password: "",
     },
   });
+  const dispatch = useDispatch();
 
-  const onSubmit =async (data) => {
-   const user = await login(data.email,data.password)
-   
-   
-   if(user)
-    navigate("/")
+  const onSubmit = async (data) => {
+    const user = await login(data.email, data.password);
+    await dispatch(login(user))
+    if (user) navigate("/");
   };
 
   return (
@@ -110,8 +110,6 @@ export default function Login() {
             {errors.password?.message && "*" + errors.password?.message}
           </p>
         </div>
-
-      
 
         <button
           type="submit"

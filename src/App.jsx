@@ -7,21 +7,23 @@ import NewsLetter from "./Page/NewsLetter";
 import About from "./Page/About";
 import SignUp from "./Page/SignUp";
 import Login from "./Page/Login";
+import NotFoundPage from "./Page/NotFound";
 
 export default function App() {
   return (
     <div className="bg-primaryBg text-white min-h-screen px-6 md:px-12 lg:px-24 py-12">
       <BrowserRouter>
         <Header />
-        
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/project" element={<Project />} />
-            <Route path="/news_letter" element={<NewsLetter />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/project" element={<Project />} />
+          <Route path="/news_letter" element={<NewsLetter />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFoundPage/>} />  
+        </Routes>
         <Footer />
       </BrowserRouter>
     </div>
