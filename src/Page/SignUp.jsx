@@ -1,7 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { createUser } from "../appwrite/User";
+import { useNavigate,Link } from "react-router";
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,9 +19,11 @@ export default function SignUp() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    alert(JSON.stringify(data));
+  const onSubmit = async(data) => {
+    const res = await createUser(data.email, data.password, data.name)
+    if(res) navigate("/")
+      
+    
   };
 
   return (

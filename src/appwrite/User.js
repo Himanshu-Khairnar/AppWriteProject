@@ -1,8 +1,9 @@
 import { account } from "./config";
-
+import { ID } from "appwrite";
 export const createUser = async (email, password, name) => {
   try {
-    return await account.create(ID, email, password, name);
+    
+    return await account.create(ID.unique(), email, password, name);
   } catch (error) {
     console.log(error);
     throw new Error("Error in creating user", error.message);

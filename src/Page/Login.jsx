@@ -1,7 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
+import { login } from "../appwrite/User";
+import { NavigationOff } from "lucide-react";
 
 export default function Login() {
+  const navigate  = useNavigate()
   const {
     register,
     handleSubmit,
@@ -15,9 +19,12 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    alert(JSON.stringify(data));
+  const onSubmit =async (data) => {
+   const user = await login(data.email,data.password)
+   
+   
+   if(user)
+    navigate("/")
   };
 
   return (
@@ -115,9 +122,9 @@ export default function Login() {
 
         <p className="text-sm text-center mt-4">
           Don't have an account?{" "}
-          <a href="#" className="font-medium underline">
+          <Link to="/signup" className="font-medium underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </form>
 
