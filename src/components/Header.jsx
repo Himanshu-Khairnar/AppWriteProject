@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink, Link, useNavigate } from "react-router";
 
 export default function Header() {
@@ -7,7 +8,7 @@ export default function Header() {
     { name: "Blog", link: "/" },
     { name: "Projects", link: "/project" },
     { name: "About Us", link: "/about" },
-    { name: "Newsletter", link: "/news_letter" }  ,
+    { name: "Newsletter", link: "/news_letter" },
   ];
   const [searchData, setSearchData] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,12 +21,12 @@ export default function Header() {
     }
   };
 
-  
+  const user = useSelector((state) => state.authSlice?.userData);
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between ">
       <div className="flex justify-between w-full lg:w-auto items-center">
-        <Link to={"/"}>
+        <Link to="/">
           <img src="blogger.png" className="h-12 w-12" />
         </Link>
         <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -86,12 +87,22 @@ export default function Header() {
             className="h-10 w-10 p-2"
           />
         </div>
-        <NavLink
-          to={"/login"}
-          className=" py-2 px-4  bg-primaryText rounded-lg w-full sm:w-auto"
-        >
-          Login
-        </NavLink>
+        {user ? (
+          <Link to={`/user`}>
+            <img
+              src="avatar.png"
+              alt=""
+              className="h-11 border-[1px] rounded-full bg-white"
+            />
+          </Link>
+        ) : (
+          <NavLink
+            to={"/login"}
+            className=" py-2 px-4  bg-primaryText rounded-lg w-full sm:w-auto"
+          >
+            Login
+          </NavLink>
+        )}
       </div>
     </div>
   );

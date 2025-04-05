@@ -24,7 +24,7 @@ export default function SignUp() {
 
   const onSubmit = async(data) => {
     const res = await createUser(data.email, data.password, data.name)
-    console.log(res);
+    
     
     await dispatch(login(res))
     if(res) navigate("/")

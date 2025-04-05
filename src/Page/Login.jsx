@@ -23,8 +23,13 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     const user = await login(data.email, data.password);
-    await dispatch(login(user))
-    if (user) navigate("/");
+    console.log(user);
+    
+    if (user) 
+    {
+      await dispatch(login(user));
+      navigate("/");
+    }
   };
 
   return (
@@ -87,22 +92,11 @@ export default function Login() {
           </label>
           <input
             id="password"
-            placeholder="*****"
+            placeholder="password"
             type="password"
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Min length is 6 characters" },
-              validate: {
-                hasUpperCase: (value) =>
-                  /[A-Z]/.test(value) ||
-                  "Password must contain at least one uppercase letter",
-                hasNumber: (value) =>
-                  /[0-9]/.test(value) ||
-                  "Password must contain at least one number",
-                hasLowerCase: (value) =>
-                  /[a-z]/.test(value) ||
-                  "Password must contain at least one lowercase letter",
-              },
+            
             })}
             className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
           />

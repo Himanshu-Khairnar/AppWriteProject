@@ -11,7 +11,6 @@ export const auth = createSlice({
   reducers: {
     login: (state, action) => {
       state.loggedIn = true;
-      console.log(action.payload)
       state.userData = action.payload;
     },
     logOut: (state) => {
@@ -21,7 +20,6 @@ export const auth = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { login,logOut } = auth.actions;
 
 export default auth.reducer;
