@@ -11,7 +11,9 @@ export const createUser = async (email, password, name) => {
 };
 export const login = async (email, password) => {
   try {
-    return account.createEmailPasswordSession(email, password);
+    console.log(email,password);
+    
+    return await  account.createEmailPasswordSession(email, password);
   } catch (error) {
     console.log(error);
     throw new Error("Error in login user", error.message);

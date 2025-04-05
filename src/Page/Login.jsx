@@ -1,16 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
-import { login } from "../appwrite/User";
-import { NavigationOff } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { login as LoginUser } from "../appwrite/User";
 import { useDispatch } from "react-redux";
-
+import { login as LoginRedux } from "../redux/authSlice";
 export default function Login() {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    getValues,
+
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -22,13 +21,12 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    const user = await login(data.email, data.password);
-    console.log(user);
-    
-    if (user) 
-    {
-      await dispatch(login(user));
+    const user = await LoginUser(data.email, data.password);
+
+    if (user) {
+      await dispatch(LoginRedux(user));
       navigate("/");
+      window.location.reload();
     }
   };
 
@@ -96,7 +94,6 @@ export default function Login() {
             type="password"
             {...register("password", {
               required: "Password is required",
-            
             })}
             className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
           />

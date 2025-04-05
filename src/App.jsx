@@ -21,21 +21,20 @@ const dispatch = useDispatch();
 
     useEffect(() => {
       const getAccountDetails = async () => {
-       try {
-         const res = await getAccount();
-         await dispatch(login(res));
-         setData(res)
-       
-       } catch (error) {
-
-        await dispatch(logOut())
-        setData(null);
-       }};
+        try {
+          const res = await getAccount();
+          await dispatch(login(res));
+          setData(res);
+        } catch (error) {
+          await dispatch(logOut());
+          setData(null);
+        }
+      };
       getAccountDetails();
       return () => {
         getAccountDetails();
       };
-    },[]);
+    }, [window.location.pathname]);
   
   return (
     <div className="bg-primaryBg text-white min-h-screen px-6 md:px-12 lg:px-24 py-12">

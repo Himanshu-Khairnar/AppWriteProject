@@ -1,9 +1,8 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { createUser } from "../appwrite/User";
-import { useNavigate,Link } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login,logOut } from "../redux/authSlice";
+import { login } from "../redux/authSlice";
 export default function SignUp() {
   const navigate = useNavigate();
   const {
@@ -19,17 +18,16 @@ export default function SignUp() {
       confirmPassword: "",
     },
   });
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
+  const onSubmit = async (data) => {
+    const res = await createUser(data.email, data.password, data.name);
 
-  const onSubmit = async(data) => {
-    const res = await createUser(data.email, data.password, data.name)
-    
-    
-    await dispatch(login(res))
-    if(res) navigate("/")
-      
-    
+    await dispatch(login(res));
+    if (res) {
+      navigate("/");
+      window.location.reload();
+    }
   };
 
   return (
