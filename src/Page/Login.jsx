@@ -1,11 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
+import { Link, useNavigate } from "react-router-dom";
+import { login as LoginUser } from "../appwrite/User";
+import { useDispatch } from "react-redux";
+import { login as LoginRedux } from "../redux/authSlice";
 export default function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    getValues,
+
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -14,10 +18,16 @@ export default function Login() {
       password: "",
     },
   });
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    alert(JSON.stringify(data));
+  const onSubmit = async (data) => {
+    const user = await LoginUser(data.email, data.password);
+
+    if (user) {
+      await dispatch(LoginRedux(user));
+      navigate("/");
+      window.location.reload();
+    }
   };
 
   return (
@@ -80,22 +90,10 @@ export default function Login() {
           </label>
           <input
             id="password"
-            placeholder="*****"
+            placeholder="password"
             type="password"
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Min length is 6 characters" },
-              validate: {
-                hasUpperCase: (value) =>
-                  /[A-Z]/.test(value) ||
-                  "Password must contain at least one uppercase letter",
-                hasNumber: (value) =>
-                  /[0-9]/.test(value) ||
-                  "Password must contain at least one number",
-                hasLowerCase: (value) =>
-                  /[a-z]/.test(value) ||
-                  "Password must contain at least one lowercase letter",
-              },
             })}
             className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
           />
@@ -103,8 +101,6 @@ export default function Login() {
             {errors.password?.message && "*" + errors.password?.message}
           </p>
         </div>
-
-      
 
         <button
           type="submit"
@@ -115,9 +111,9 @@ export default function Login() {
 
         <p className="text-sm text-center mt-4">
           Don't have an account?{" "}
-          <a href="#" className="font-medium underline">
+          <Link to="/signup" className="font-medium underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </form>
 
