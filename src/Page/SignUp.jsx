@@ -1,7 +1,10 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-
+import { createUser } from "../appwrite/User";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/authSlice";
 export default function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -15,10 +18,16 @@ export default function SignUp() {
       confirmPassword: "",
     },
   });
+  const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    alert(JSON.stringify(data));
+  const onSubmit = async (data) => {
+    const res = await createUser(data.email, data.password, data.name);
+
+    await dispatch(login(res));
+    if (res) {
+      navigate("/");
+      window.location.reload();
+    }
   };
 
   return (
