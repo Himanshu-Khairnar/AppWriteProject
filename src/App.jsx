@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAccount } from "./appwrite/User";
 import { login } from "./redux/authSlice";
 import { useEffect, useState } from "react";
+import UserDetails from "./Page/UserDetails";
 
 export default function App() {
   const [data,setData] = useState(null);
@@ -49,6 +50,7 @@ const dispatch = useDispatch();
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path={`/user/`} element={<User />} />
+          <Route path="/adduserdetails/" element={<UserDetails/>}/>
           <Route path="*" element={<NotFoundPage/>} />  
         </Routes>
         <Footer />

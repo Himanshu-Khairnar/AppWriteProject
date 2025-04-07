@@ -43,7 +43,6 @@ export default function Login() {
           <img src="blogger.png" alt="Blogger logo" className="h-8 md:h-10" />
         </div>
 
-    
         <div className="mb-4">
           <label htmlFor="email" className="block mb-1 font-medium">
             Email*
