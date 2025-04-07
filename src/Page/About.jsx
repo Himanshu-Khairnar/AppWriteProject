@@ -1,6 +1,6 @@
 import React from "react";
 import Heading from "../components/Heading";
-import HeadingImage from "../components/HeadingImage";
+import { Github, NotebookText } from "lucide-react";
 
 export default function About() {
   return (
@@ -67,6 +67,27 @@ export default function About() {
           <li>
             Diploma In Computer Science, In GOVERNMENT POLYTECHNIC MUMBAI :
             ongoing
+          </li>
+        </ul>
+      </div>
+      <div className="mt-10 w-full">
+        <h1 className="text-[24px] font-semibold">Links:</h1>
+        <ul className="text-gray-400 list-disc ml-5 text-base md:text-lg">
+          <li>
+            <a
+              href="https://github.com/Himanshu-Khairnar"
+              className="flex gap-2"
+            >
+              Github <Github />
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://portfolio-himasnhu-khairnars-projects.vercel.app/"
+              className="flex gap-2"
+            >
+              Porfoilo Site <NotebookText />
+            </a>
           </li>
         </ul>
       </div>

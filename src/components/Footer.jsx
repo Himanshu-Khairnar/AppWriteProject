@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center gap-7 mt-5 text-center">
       <p>© 2025</p>
-      <Link to="https://x.com/HimanshuKh97394">X</Link>
+      <Link to="https://x.com/Himansh52658724">X</Link>
       <Link to="https://linkedin.com/in/himanshu-khairnar-9908a6288">
         Linkedin
       </Link>

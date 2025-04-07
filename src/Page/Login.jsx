@@ -43,24 +43,7 @@ export default function Login() {
           <img src="blogger.png" alt="Blogger logo" className="h-8 md:h-10" />
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="name" className="block mb-1 font-medium">
-            Full Name*
-          </label>
-          <input
-            id="name"
-            placeholder="John Doe"
-            {...register("name", {
-              required: "Full Name is required",
-              maxLength: { value: 50, message: "Max length is 50 characters" },
-            })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
-          />
-          <p className="text-red-500 text-xs mt-1 h-4">
-            {errors.name?.message && "*" + errors.name?.message}
-          </p>
-        </div>
-
+    
         <div className="mb-4">
           <label htmlFor="email" className="block mb-1 font-medium">
             Email*

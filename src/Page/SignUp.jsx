@@ -25,7 +25,7 @@ export default function SignUp() {
 
     await dispatch(login(res));
     if (res) {
-      navigate("/");
+      navigate("/login");
       window.location.reload();
     }
   };
@@ -94,7 +94,7 @@ export default function SignUp() {
             type="password"
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Min length is 6 characters" },
+              minLength: { value: 8, message: "Min length is 8 characters" },
               validate: {
                 hasUpperCase: (value) =>
                   /[A-Z]/.test(value) ||
@@ -124,7 +124,7 @@ export default function SignUp() {
             placeholder="*****"
             {...register("confirmPassword", {
               required: "Confirm Password is required",
-              minLength: { value: 6, message: "Min length is 6 characters" },
+              minLength: { value: 8, message: "Min length is 8 characters" },
               validate: (value) =>
                 value === getValues("password") || "Passwords do not match",
             })}
