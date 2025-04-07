@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserDetails, isSlugUnique } from "../appwrite/User";
+import { useNavigate } from "react-router";
+import { userDetails } from "../redux/authSlice";
 export default function UserDetailForm() {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
   const [image, setImage] = useState(null);
 
+  const userData = useSelector((state) => state.authSlice?.userData);
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
   } = useForm({
@@ -14,8 +22,16 @@ export default function UserDetailForm() {
       bio: "",
       github: "",
       avatar: "",
+      userId: "",
     },
   });
+
+  const randomString = Math.random().toString(36).substring(2, 8); // 4-char random string
+  const value = `${userData?.name
+    .toLowerCase()
+    .replace(/\s+/g, "-")}-${randomString}`;
+  setValue("username", value);
+  setValue("userId", userData?.$id);
 
   const avatarFile = watch("avatar");
 
@@ -28,8 +44,13 @@ export default function UserDetailForm() {
     }
   }, [avatarFile]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const isUsernameUnique = await isSlugUnique(data.username);
+    if (isUsernameUnique) {
+      const res = await createUserDetails(data);
+      res && dispatch(userDetails(res))
+      res && navigate("/");
+    }
   };
   return (
     <div className="flex flex-col md:flex-row mt-10 gap-5 md:gap-10 px-4 md:px-8 max-w-6xl mx-auto">
@@ -148,8 +169,6 @@ export default function UserDetailForm() {
         >
           Let's go
         </button>
-
-       
       </form>
 
       <div className="hidden md:flex flex-1 items-center justify-center">

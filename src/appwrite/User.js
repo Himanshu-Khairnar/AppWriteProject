@@ -1,8 +1,8 @@
-import { account, databases,storage } from "./config";
-import { ID } from "appwrite";
-const database = import.meta.env.VITE_APP_DATABASE_ID;
-const collection = import.meta.env.VITE_APP_COLLECTION_USER;
-const bucket = import.meta.env.VITE_APP_BUCKET_ID;
+import { account, databases, storage } from "./config";
+import { ID, Query } from "appwrite";
+const databaseId = import.meta.env.VITE_APP_DATABASE_ID;
+const collectionId = import.meta.env.VITE_APP_COLLECTION_USER;
+const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
 export const createUser = async (email, password, name) => {
   try {
     console.log(email, password, name);
@@ -55,18 +55,44 @@ export const getAccount = async () => {
     throw new Error("Error in updating password", error.message);
   }
 };
-
+export const isSlugUnique = async (slug) => {
+  const res = await databases.listDocuments(databaseId, collectionId, [
+    Query.equal("username", slug),
+  ]);
+  return res.total === 0; 
+};
 export const createUserDetails = async (data) => {
   try {
+    console.log(data);
     
-    const image = await storage.createFile(storage,ID.unique(),data?.image)
+    const image = await storage.createFile(
+      bucketId,
+      ID.unique(),
+      data?.avatar[0]
+    );
+    const url = await storage.getFilePreview(bucketId, image.$id);
+    console.log(url.href);
+    
     return await databases.createDocument(
-      database,collection,ID.unique(),{
-        data
+      databaseId,
+      collectionId,
+      ID.unique(),
+      {
+        username: data.username,
+        bio: data.bio,
+        Avatar: url.href,
+        Github: data.github,
+        userId: data.userId,
       }
-    )
+    );
   } catch (error) {
     console.log(error);
     throw new Error("Error in created user details", error.message);
   }
+};
+export const getUserDetails  = async (userId) =>
+{
+  return await databases.listDocuments(databaseId, collectionId, [
+    Query.equal("userId", userId),
+  ]);
 };
