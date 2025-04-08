@@ -20,7 +20,6 @@ export default function App() {
   const [data, setData] = useState(null);
   const [data2, setData2] = useState(null);
   const dispatch = useDispatch();
-
   useEffect(() => {
     const getAccountDetails = async () => {
       try {
@@ -28,11 +27,10 @@ export default function App() {
 
         await dispatch(login(res));
         const res2 = await getUserDetails(res.$id);
-        await dispatch(userDetails(res2));
 
-        setData2(res2);
-        console.log("data2",data2);
-        
+        await dispatch(userDetails(res2.documents[0]));
+
+        setData2(res);
       } catch (error) {
         await dispatch(logOut());
         setData(null);
@@ -48,8 +46,8 @@ export default function App() {
     <div className="bg-primaryBg text-white min-h-screen px-6 md:px-12 lg:px-24 py-12">
       <BrowserRouter>
         <Header />
-        {data?.name}
-        {data2?.github}
+        <p>{data?.name}</p>
+        <p>{data2?.Github}</p>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project" element={<Project />} />

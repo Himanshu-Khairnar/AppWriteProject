@@ -59,20 +59,19 @@ export const isSlugUnique = async (slug) => {
   const res = await databases.listDocuments(databaseId, collectionId, [
     Query.equal("username", slug),
   ]);
-  return res.total === 0; 
+  return res.total === 0;
 };
 export const createUserDetails = async (data) => {
   try {
     console.log(data);
-    
+
     const image = await storage.createFile(
       bucketId,
       ID.unique(),
-      data?.avatar[0]
+      data?.avatar[0],
+      ["role:all"]
     );
-    const url = await storage.getFilePreview(bucketId, image.$id);
-    console.log(url.href);
-    
+
     return await databases.createDocument(
       databaseId,
       collectionId,
@@ -80,7 +79,7 @@ export const createUserDetails = async (data) => {
       {
         username: data.username,
         bio: data.bio,
-        Avatar: url.href,
+        Avatar: image.$id,
         Github: data.github,
         userId: data.userId,
       }
@@ -90,9 +89,17 @@ export const createUserDetails = async (data) => {
     throw new Error("Error in created user details", error.message);
   }
 };
-export const getUserDetails  = async (userId) =>
-{
+export const getUserDetails = async (userId) => {
   return await databases.listDocuments(databaseId, collectionId, [
     Query.equal("userId", userId),
   ]);
+};
+
+export const getImagePreview =  (fileId) => {
+  try {
+    return  storage.getFilePreview(bucketId, fileId);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in preview image", error.message);
+  }
 };
