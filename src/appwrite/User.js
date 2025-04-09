@@ -97,7 +97,7 @@ export const getUserDetails = async (userId) => {
 
 export const getImagePreview =  (fileId) => {
   try {
-    return  storage.getFilePreview(bucketId, fileId);
+    return storage.getFileView(bucketId, fileId).href; 
   } catch (error) {
     console.log(error);
     throw new Error("Error in preview image", error.message);

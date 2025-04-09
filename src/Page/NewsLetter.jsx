@@ -22,7 +22,7 @@ export default function NewsLetter() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button className="py-3 px-4 bg-primaryText rounded-lg w-full sm:w-auto">
+        <button className="hover:opacity-90 transition-all   py-3 px-4 bg-primaryText rounded-lg w-full sm:w-auto">
           Subscribe
         </button>
       </div>

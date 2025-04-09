@@ -76,7 +76,7 @@ export default function About() {
           <li>
             <a
               href="https://github.com/Himanshu-Khairnar"
-              className="flex gap-2"
+              className="flex gap-2 text-blue-600 hover:underline"
             >
               Github <Github />
             </a>
@@ -84,7 +84,7 @@ export default function About() {
           <li>
             <a
               href="https://portfolio-himasnhu-khairnars-projects.vercel.app/"
-              className="flex gap-2"
+              className="flex gap-2 text-blue-600 hover:underline"
             >
               Porfoilo Site <NotebookText />
             </a>
