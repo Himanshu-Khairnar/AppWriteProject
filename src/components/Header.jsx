@@ -1,17 +1,26 @@
 import { Search } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, Link, useNavigate } from "react-router";
+import { userDetails } from "../redux/authSlice";
+import { getImagePreview } from "../appwrite/User";
 
 export default function Header() {
-  const data = [
+    const user = useSelector((state) => state.authSlice?.userData);
+    const userDetail = useSelector((state) => state.authSlice?.userDetail);
+ 
+  let data = [
     { name: "Blog", link: "/" },
     { name: "Projects", link: "/project" },
-    { name: "About Us", link: "/about" },
-    { name: "Newsletter", link: "/news_letter" },
+    { name: "Create Blog", link: "/createBlog" },
+    // { name: "Account ", link: "/news_letter" },
   ];
+  if (user) {
+    data = [...data, { name: "My Blogs ", link: "/myblogs" }];
+  }
   const [searchData, setSearchData] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [image, setImage] = useState("");
   const navigate = useNavigate();
 
   const search = (e) => {
@@ -21,7 +30,22 @@ export default function Header() {
     }
   };
 
-  const user = useSelector((state) => state.authSlice?.userData);
+ const imgId = userDetail?.Avatar;
+
+  useEffect(() => {
+    const getPreview = async (fileId) => {
+      try {
+        const imageUrl = await getImagePreview(fileId);
+        setImage(imageUrl);
+      } catch (error) {
+        console.error("Failed to fetch image preview:", error);
+      }
+    };
+
+    if (imgId) {
+      getPreview(imgId);
+    }
+  }, [userDetail]);
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between ">
@@ -90,18 +114,27 @@ export default function Header() {
         {user ? (
           <Link to={`/user`}>
             <img
-              src="avatar.png"
+              src={image ? image : "avatar.png"}
               alt=""
-              className="h-11 border-[1px] rounded-full bg-white"
+              className="h-12 w-12 border-[1px] rounded-full bg-white"
             />
           </Link>
         ) : (
-          <NavLink
-            to={"/login"}
-            className=" py-2 px-4  bg-primaryText rounded-lg w-full sm:w-auto"
-          >
-            Login
-          </NavLink>
+          <div className="flex gap-2">
+            <NavLink
+              to={"/login"}
+              className=" py-2 px-4  bg-primaryText rounded-lg w-full sm:w-auto"
+            >
+              Login
+            </NavLink>
+
+            <NavLink
+              to={"/signup"}
+              className=" py-2 px-4  hover:underline rounded-lg w-full sm:w-auto"
+            >
+              Sign Up
+            </NavLink>
+          </div>
         )}
       </div>
     </div>

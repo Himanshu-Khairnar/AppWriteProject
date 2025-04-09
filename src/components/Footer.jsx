@@ -16,6 +16,9 @@ export default function Footer() {
       <Link to="https://stackoverflow.com/users/28455233/himanshu-khairnar">
         Stack overflow
       </Link>
+      <Link to="/about">
+        About Us
+      </Link>
     </div>
   );
 }

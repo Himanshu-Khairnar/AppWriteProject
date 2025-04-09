@@ -17,11 +17,10 @@ export default function User() {
   };
 
   useEffect(() => {
-    const getPreview = async(fileId) => {
+    const getPreview = async (fileId) => {
       try {
-        const imageUrl =  await getImagePreview(fileId);
+        const imageUrl = await getImagePreview(fileId);
         setImage(imageUrl);
-        console.log("Image URL:", imageUrl);
       } catch (error) {
         console.error("Failed to fetch image preview:", error);
       }
@@ -64,7 +63,7 @@ export default function User() {
               target="_blank"
               className="text-sm text-blue-600 hover:underline flex items-center "
             >
-              GitHub Profile <MoveUpRight className="h-4 "/>
+              GitHub Profile <MoveUpRight className="h-4 " />
             </Link>
           )}
 

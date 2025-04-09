@@ -1,38 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { createUserDetails, isSlugUnique } from "../appwrite/User";
-import { useNavigate } from "react-router";
-import { userDetails } from "../redux/authSlice";
-export default function UserDetailForm() {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-  const [image, setImage] = useState(null);
+import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router";
+import { getImagePreview } from "../appwrite/User";
+import { RefreshCcw } from "lucide-react";
 
+export default function UserDetailForm() {
+  const userDetail = useSelector((state) => state.authSlice?.userDetail);
   const userData = useSelector((state) => state.authSlice?.userData);
+  console.log(userDetail);
+
+  const [image, setImage] = useState("");
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      username: "",
-      bio: "",
-      github: "",
-      avatar: "",
-      userId: "",
-    },
-  });
-
-  const randomString = Math.random().toString(36).substring(2, 8); // 4-char random string
-  const value = `${userData?.name
-    .toLowerCase()
-    .replace(/\s+/g, "-")}-${randomString}`;
-  setValue("username", value);
-  setValue("userId", userData?.$id);
-
+  } = useForm();
+  useEffect(() => {
+    if (userDetail) {
+      reset({
+        username: userDetail?.username,
+        bio: userDetail?.bio,
+        github: userDetail?.Github,
+        docId: userDetail?.$id,
+      });
+      setImage(getImagePreview(userDetail?.Avatar));
+    }
+  }, [userDetail]);
+  const changeUsername = () => {
+    const randomString = Math.random().toString(36).substring(2, 8);
+    const value = `${userData?.name
+      .toLowerCase()
+      .replace(/\s+/g, "-")}-${randomString}`;
+    setValue("username", value);
+  };
   const avatarFile = watch("avatar");
 
   useEffect(() => {
@@ -43,20 +47,14 @@ export default function UserDetailForm() {
       return () => URL.revokeObjectURL(objectUrl);
     }
   }, [avatarFile]);
-
-  const onSubmit = async (data) => {
-    const isUsernameUnique = await isSlugUnique(data.username);
-    if (isUsernameUnique) {
-      const res = await createUserDetails(data);
-      res && dispatch(userDetails(res))
-      res && navigate("/");
-    }
+  const onSubmit = (data) => {
+    console.log(data);
   };
   return (
-    <div className="flex flex-col md:flex-row mt-10 gap-5 md:gap-10 px-4 md:px-8 max-w-6xl mx-auto">
+    <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-5 flex-1 md:pr-5 w-full"
+        className="space-y-5 flex-1 md:pr-5 w-[90%]"
       >
         <div className="text-2xl md:text-3xl font-bold flex items-center justify-center gap-2 mb-8">
           <h1 className="text-center">Heyyy, lets fill some details</h1>
@@ -66,23 +64,32 @@ export default function UserDetailForm() {
           <label htmlFor="username" className="block mb-1 font-medium">
             @Username
           </label>
-          <input
-            id="username"
-            placeholder="Himanshu Khairnar"
-            type="text"
-            {...register("username", {
-              required: "username is required",
-              minLength: {
-                value: 4,
-                message: "username is below 4 characters",
-              },
-              maxLength: {
-                value: 100,
-                message: "username should be under 100 character",
-              },
-            })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
-          />
+          <div className="flex">
+            <input
+              id="username"
+              placeholder="Himanshu Khairnar"
+              type="text"
+              {...register("username", {
+                required: "username is required",
+                minLength: {
+                  value: 4,
+                  message: "username is below 4 characters",
+                },
+                maxLength: {
+                  value: 100,
+                  message: "username should be under 100 character",
+                },
+              })}
+              className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
+            />
+            <button
+              onClick={() => {
+                changeUsername();
+              }}
+            >
+              <RefreshCcw />
+            </button>
+          </div>
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.username?.message && "*" + errors.username?.message}
           </p>
@@ -170,14 +177,6 @@ export default function UserDetailForm() {
           Let's go
         </button>
       </form>
-
-      <div className="hidden md:flex flex-1 items-center justify-center">
-        <img
-          src="profile_details.svg"
-          alt="Sign in illustration"
-          className="max-h-[550px] object-contain w-full"
-        />
-      </div>
     </div>
   );
 }

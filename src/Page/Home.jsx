@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Heading from "../components/Heading";
 import {  useSelector } from "react-redux";
+import NewsLetter from "./NewsLetter";
 
 export default function Home() {
   const data = useSelector((state) => state.authSlice?.userData);
@@ -9,6 +10,7 @@ export default function Home() {
     <div className="mt-10">
       <Heading data={"THE BLOG"} />
       <p className="text-white text-2xl">{data?.name}</p>
+      <NewsLetter/>
     </div>
   );
 }

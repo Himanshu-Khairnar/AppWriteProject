@@ -5,7 +5,6 @@ const collectionId = import.meta.env.VITE_APP_COLLECTION_USER;
 const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
 export const createUser = async (email, password, name) => {
   try {
-    console.log(email, password, name);
 
     return await account.create(ID.unique(), email, password, name);
   } catch (error) {
@@ -15,7 +14,6 @@ export const createUser = async (email, password, name) => {
 };
 export const login = async (email, password) => {
   try {
-    console.log(email, password);
 
     return await account.createEmailPasswordSession(email, password);
   } catch (error) {
@@ -69,7 +67,6 @@ export const createUserDetails = async (data) => {
       bucketId,
       ID.unique(),
       data?.avatar[0],
-      ["role:all"]
     );
 
     return await databases.createDocument(
@@ -89,11 +86,39 @@ export const createUserDetails = async (data) => {
     throw new Error("Error in created user details", error.message);
   }
 };
+export const updateUserDetails = async (data) => {
+  try {
+    console.log(data);
+
+    const image = await storage.createFile(
+      bucketId,
+      ID.unique(),
+      data?.avatar[0],
+      ["role:all"]
+    );
+
+    return await databases.updateDocument(
+      databaseId,
+      collectionId,
+      data.$id,
+      {
+        username: data.username,
+        bio: data.bio,
+        Avatar: image.$id,
+        Github: data.github,
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in created user details", error.message);
+  }
+};
 export const getUserDetails = async (userId) => {
   return await databases.listDocuments(databaseId, collectionId, [
     Query.equal("userId", userId),
   ]);
 };
+
 
 export const getImagePreview =  (fileId) => {
   try {

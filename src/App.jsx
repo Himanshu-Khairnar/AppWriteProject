@@ -15,6 +15,8 @@ import { getAccount, getUserDetails } from "./appwrite/User";
 import { login } from "./redux/authSlice";
 import { useEffect, useState } from "react";
 import UserDetails from "./Page/UserDetails";
+import CreateBlog from "./Page/CreateBlog";
+import UpdateUserDetails from "./Page/UpdateUserDetails";
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -51,12 +53,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project" element={<Project />} />
-          <Route path="/news_letter" element={<NewsLetter />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path={`/user/`} element={<User />} />
+          <Route path={`/myblogs`} element={<User />} />
           <Route path="/adduserdetails/" element={<UserDetails />} />
+          <Route path="/createBlog" element={<CreateBlog />} />
+          <Route path="/updateUserDetail" element={<UpdateUserDetails />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
