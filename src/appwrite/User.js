@@ -119,25 +119,29 @@ export const getImagePreview = (fileId) => {
     throw new Error("Error in preview image", error.message);
   }
 };
-export const changeName = async (userId, name) => {
+export const changeName = async ( name) => {
   try {
-    return await await account.updateName(userId, name);
+    return await await account.updateName( name);
   } catch (error) {
     console.log(error);
     throw new Error("Error in changing name", error.message);
   }
 };
-export const changeEmail = async (userId, email) => {
+export const  changeEmail = async ( email,password) => {
   try {
-    return await await account.updateEmail(userId, email);
+    
+    return await await account.updateEmail(email, password);
+
   } catch (error) {
     console.log(error);
     throw new Error("Error in changing email", error.message);
   }
 };
-export const changePassword = async (userId, password) => {
+export const changePassword = async (password, oldpassword) => {
   try {
-    return await await account.updatePassword(userId, password);
+    console.log(password,oldpassword);
+    
+    return await await account.updatePassword(password, oldpassword);
   } catch (error) {
     console.log(error);
     throw new Error("Error in changing password", error.message);

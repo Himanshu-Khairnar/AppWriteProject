@@ -1,17 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getSession } from "../appwrite/User";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeName,
+  getSession,
+  changeEmail,
+  changePassword,
+  logout,
+} from "../appwrite/User";
+import Alert from "../components/Alert";
+import { useNavigate } from "react-router";
+import {logOut as reduxLogout} from '../redux/authSlice'
 export default function Account() {
   const userData = useSelector((state) => state.authSlice?.userData);
   const [sessions, setsession] = useState(null);
   const [updateEmail, setUpdateEmail] = useState(false);
   const [updatePassword, setUpdatePassword] = useState(false);
   const [updateName, setUpdateName] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [oldpassword, setOldPassword] = useState("");
+  const [changeoldpassword, setChangeOldPassword] = useState("");
   const [password, setPassword] = useState("");
-
+  const dispatch = useDispatch();
+const navigate = useNavigate()
+  const getLogOut = async () => {
+      await logout();
+      dispatch(reduxLogout());
+      navigate("/")
+    };
+  
   useEffect(() => {
     const listSession = async () => {
       const session = await getSession();
@@ -19,10 +38,49 @@ export default function Account() {
     };
     listSession();
   }, []);
+  const submitName = async () => {
+    console.log(name);
+
+    const data = await changeName(name);
+    if (data) {
+      setAlert(true);
+      setAlertMessage("Successfully Updated Name");
+      setName("")
+    } else {
+      setAlert(true);
+      setAlertMessage("Error in Updating Name");
+    }
+  };
+  const submitEmail = async () => {
+    const data = await changeEmail(email, oldpassword);
+    if (data) {
+      setAlert(true);
+      setAlertMessage("Successfully Updated email");
+      setEmail("")
+      setOldPassword("")
+    } else {
+      setAlert(true);
+      setAlertMessage("Error in Updating Email");
+    }
+  };
+  const submitPassword = async () => {
+    const data = await changePassword( password,changeoldpassword);
+    if (data) {
+      setAlert(true);
+      setAlertMessage("Successfully Updated password");
+      setChangeOldPassword("")
+      setPassword("")
+    } else {
+
+      setAlert(true);
+      setAlertMessage("Error in Updating Password");
+    }
+    
+  };
 
   return (
     <div className="mt-10 max-w-2xl mx-auto px-6 space-y-8">
-      {/* Welcome and Update Name */}
+      {alert && <Alert message={alertMessage} setAlert={setAlert} />}
       <div className="rounded-xl p-6 bg-primaryBg text-white space-y-4 shadow-lg border border-opacity-20 border-blue-300">
         <h1 className="text-2xl font-bold flex items-center">
           <span className="mr-2">👋</span> Hello, {userData?.name}!
@@ -59,7 +117,10 @@ export default function Account() {
               className="p-2 rounded bg-secondaryBg text-white w-full focus:ring-2 focus:ring-blue-500 outline-none"
             />
             <div className="flex gap-2">
-              <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors duration-200 font-medium">
+              <button
+                className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors duration-200 font-medium"
+                onClick={() => submitName()}
+              >
                 Update
               </button>
               <button
@@ -74,7 +135,6 @@ export default function Account() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Update Email */}
         <div className="rounded-xl p-6 text-white space-y-4 shadow-lg bg-opacity-20 bg-blue-900 backdrop-blur-sm border border-opacity-20 border-blue-300">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <svg
@@ -125,8 +185,18 @@ export default function Account() {
                 placeholder="Enter new email"
                 className="p-2 rounded bg-secondaryBg text-white w-full focus:ring-2 focus:ring-blue-500 outline-none"
               />
+              <input
+                type="password"
+                value={oldpassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                placeholder="Enter your Password"
+                className="p-2 rounded bg-secondaryBg text-white w-full focus:ring-2 focus:ring-blue-500 outline-none"
+              />
               <div className="flex gap-2">
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors duration-200 flex-1 font-medium">
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors duration-200 flex-1 font-medium"
+                  onClick={() => submitEmail()}
+                >
                   Update
                 </button>
                 <button
@@ -191,8 +261,18 @@ export default function Account() {
                 placeholder="Enter new password"
                 className="p-2 rounded bg-secondaryBg text-white w-full focus:ring-2 focus:ring-blue-500 outline-none"
               />
+              <input
+                type="password"
+                value={changeoldpassword}
+                onChange={(e) => setChangeOldPassword(e.target.value)}
+                placeholder="Enter new password"
+                className="p-2 rounded bg-secondaryBg text-white w-full focus:ring-2 focus:ring-blue-500 outline-none"
+              />
               <div className="flex gap-2">
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors duration-200 flex-1 font-medium">
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors duration-200 flex-1 font-medium"
+                  onClick={() => submitPassword()}
+                >
                   Update
                 </button>
                 <button
@@ -293,7 +373,7 @@ export default function Account() {
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
-        <button className="bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg text-white w-full transition-colors duration-200 font-medium flex items-center justify-center gap-2">
+        <button className="bg-red-700 hover:bg-red-800 px-6 py-3 rounded-lg text-white w-full transition-colors duration-200 font-medium flex items-center justify-center gap-2" onClick={()=>getLogOut()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -311,23 +391,7 @@ export default function Account() {
           </svg>
           Sign Out
         </button>
-        <button className="bg-red-700 hover:bg-red-800 px-6 py-3 rounded-lg text-white w-full transition-colors duration-200 font-medium flex items-center justify-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M3 6h18"></path>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          </svg>
-          Delete Account
-        </button>
+      
       </div>
     </div>
   );
