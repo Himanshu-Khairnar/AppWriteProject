@@ -13,7 +13,6 @@ export default function Header() {
     { name: "Blog", link: "/" },
     { name: "Projects", link: "/project" },
     { name: "Create Blog", link: "/createBlog" },
-    // { name: "Account ", link: "/news_letter" },
   ];
   if (user) {
     data = [...data, { name: "My Blogs ", link: "/myblogs" }];
@@ -112,11 +111,11 @@ export default function Header() {
           />
         </div>
         {user ? (
-          <Link to={`/user`}>
+          <Link to={`/account`}>
             <img
               src={image ? image : "avatar.png"}
               alt=""
-              className="h-12 w-12 border-[1px] rounded-full bg-white"
+              className="h-9 w-9 border-[1px] rounded-full bg-white"
             />
           </Link>
         ) : (

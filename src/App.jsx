@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import UserDetails from "./Page/UserDetails";
 import CreateBlog from "./Page/CreateBlog";
 import UpdateUserDetails from "./Page/UpdateUserDetails";
+import Account from "./Page/Account";
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -60,6 +61,8 @@ export default function App() {
           <Route path="/adduserdetails/" element={<UserDetails />} />
           <Route path="/createBlog" element={<CreateBlog />} />
           <Route path="/updateUserDetail" element={<UpdateUserDetails />} />
+          <Route path="newsletter" element={<NewsLetter/>}/>
+          <Route path="account" element={<Account/>}/>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

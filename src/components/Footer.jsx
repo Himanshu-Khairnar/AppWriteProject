@@ -19,6 +19,9 @@ export default function Footer() {
       <Link to="/about">
         About Us
       </Link>
+      <Link to="/newsletter">
+        Newsletter
+      </Link>
     </div>
   );
 }

@@ -5,7 +5,6 @@ const collectionId = import.meta.env.VITE_APP_COLLECTION_USER;
 const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
 export const createUser = async (email, password, name) => {
   try {
-
     return await account.create(ID.unique(), email, password, name);
   } catch (error) {
     console.log(error);
@@ -14,7 +13,6 @@ export const createUser = async (email, password, name) => {
 };
 export const login = async (email, password) => {
   try {
-
     return await account.createEmailPasswordSession(email, password);
   } catch (error) {
     console.log(error);
@@ -66,7 +64,7 @@ export const createUserDetails = async (data) => {
     const image = await storage.createFile(
       bucketId,
       ID.unique(),
-      data?.avatar[0],
+      data?.avatar[0]
     );
 
     return await databases.createDocument(
@@ -97,17 +95,12 @@ export const updateUserDetails = async (data) => {
       ["role:all"]
     );
 
-    return await databases.updateDocument(
-      databaseId,
-      collectionId,
-      data.$id,
-      {
-        username: data.username,
-        bio: data.bio,
-        Avatar: image.$id,
-        Github: data.github,
-      }
-    );
+    return await databases.updateDocument(databaseId, collectionId, data.$id, {
+      username: data.username,
+      bio: data.bio,
+      Avatar: image.$id,
+      Github: data.github,
+    });
   } catch (error) {
     console.log(error);
     throw new Error("Error in created user details", error.message);
@@ -118,13 +111,51 @@ export const getUserDetails = async (userId) => {
     Query.equal("userId", userId),
   ]);
 };
-
-
-export const getImagePreview =  (fileId) => {
+export const getImagePreview = (fileId) => {
   try {
-    return storage.getFileView(bucketId, fileId).href; 
+    return storage.getFileView(bucketId, fileId).href;
   } catch (error) {
     console.log(error);
     throw new Error("Error in preview image", error.message);
+  }
+};
+export const changeName = async (userId, name) => {
+  try {
+    return await await account.updateName(userId, name);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in changing name", error.message);
+  }
+};
+export const changeEmail = async (userId, email) => {
+  try {
+    return await await account.updateEmail(userId, email);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in changing email", error.message);
+  }
+};
+export const changePassword = async (userId, password) => {
+  try {
+    return await await account.updatePassword(userId, password);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in changing password", error.message);
+  }
+};
+export const getSession = async () => {
+  try {
+    return await await account.listSessions();
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in getting session", error.message);
+  }
+};
+
+export const deleteAccount = async () => {
+  try {
+    return account.delete(userId);
+  } catch (error) {
+    throw new Error("Error in deleting account", error.message);
   }
 };
