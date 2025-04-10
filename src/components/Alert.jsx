@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Alert({message,setAlert}) {
   return (
-    <div>
+    <div className='z-50'>
       <div
         role="alert"
         className="rounded-md border border-gray-300 bg-white p-4 shadow-sm "

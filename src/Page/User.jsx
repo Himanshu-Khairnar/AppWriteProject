@@ -10,10 +10,11 @@ import {
   Edit,
   BookOpen,
 } from "lucide-react";
+import Toggle from "../components/Toggle";
 
 export default function User() {
   const [Image, setImage] = useState("");
-
+const [toggle,settoggle] = useState(false)
   const data = useSelector((state) => state.authSlice?.userData);
   const detail = useSelector((state) => state.authSlice?.userDetail);
 
@@ -33,9 +34,11 @@ export default function User() {
   }, [detail?.Avatar]);
 
   return (
-    <div className="mt-10  ">
+    <div className="mt-10 relative ">
+      
+      {toggle && <Toggle toggle={toggle} setToggle={settoggle} />}
       <div className="bg-opacity-20 shadow-lg flex justify-center">
-        <div className="flex flex-col items-center bg-blue-900 p-10 bg-opacity-20  backdrop-blur-sm border border-opacity-20 border-blue-300 rounded-xl  shadow-lg text-center md:flex-row md:items-start md:text-left gap-10">
+        <div className="flex flex-col items-center  p-10 bg-opacity-20  backdrop-blur-sm  rounded-xl  shadow-lg text-center md:flex-row md:items-start md:text-left gap-10">
           <div className="w-full md:w-auto  flex  items-center md:justify-start">
             {Image ? (
               <div className="relative group">
@@ -85,13 +88,13 @@ export default function User() {
             )}
 
             <div className="flex flex-col md:flex-row gap-3 mt-4">
-              <Link
-                to="/updateUserDetail"
+              <button
+                onClick={() => settoggle(true)}
                 className="py-3 px-6 bg-primaryText text-center text-white rounded-lg hover:shadow-lg flex items-center justify-center gap-2 transition-all duration-200 hover:opacity-90"
               >
                 <Edit size={16} />
                 Edit Profile
-              </Link>
+              </button>
             </div>
           </div>
         </div>

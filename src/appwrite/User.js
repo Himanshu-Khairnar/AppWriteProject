@@ -87,23 +87,22 @@ export const createUserDetails = async (data) => {
 export const updateUserDetails = async (data) => {
   try {
     console.log(data);
+    let image;
+    if (data?.avatar) {
+      image = await storage.createFile(bucketId, ID.unique(), data?.avatar[0]);
+      await storage.deleteFile(bucketId,data?.avatarId)
+    }
 
-    const image = await storage.createFile(
-      bucketId,
-      ID.unique(),
-      data?.avatar[0],
-      ["role:all"]
-    );
-
-    return await databases.updateDocument(databaseId, collectionId, data.$id, {
+    return await databases.updateDocument(databaseId, collectionId, data?.id, {
       username: data.username,
       bio: data.bio,
-      Avatar: image.$id,
+      Avatar: image ? image.$id : data.avatarId,
       Github: data.github,
+      userId: data.userId,
     });
   } catch (error) {
     console.log(error);
-    throw new Error("Error in created user details", error.message);
+    throw new Error("Error in updating user details", error.message);
   }
 };
 export const getUserDetails = async (userId) => {
@@ -119,19 +118,17 @@ export const getImagePreview = (fileId) => {
     throw new Error("Error in preview image", error.message);
   }
 };
-export const changeName = async ( name) => {
+export const changeName = async (name) => {
   try {
-    return await await account.updateName( name);
+    return await await account.updateName(name);
   } catch (error) {
     console.log(error);
     throw new Error("Error in changing name", error.message);
   }
 };
-export const  changeEmail = async ( email,password) => {
+export const changeEmail = async (email, password) => {
   try {
-    
     return await await account.updateEmail(email, password);
-
   } catch (error) {
     console.log(error);
     throw new Error("Error in changing email", error.message);
@@ -139,8 +136,7 @@ export const  changeEmail = async ( email,password) => {
 };
 export const changePassword = async (password, oldpassword) => {
   try {
-    console.log(password,oldpassword);
-    
+
     return await await account.updatePassword(password, oldpassword);
   } catch (error) {
     console.log(error);
@@ -153,13 +149,5 @@ export const getSession = async () => {
   } catch (error) {
     console.log(error);
     throw new Error("Error in getting session", error.message);
-  }
-};
-
-export const deleteAccount = async () => {
-  try {
-    return account.delete(userId);
-  } catch (error) {
-    throw new Error("Error in deleting account", error.message);
   }
 };

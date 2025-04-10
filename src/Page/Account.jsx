@@ -9,7 +9,7 @@ import {
 } from "../appwrite/User";
 import Alert from "../components/Alert";
 import { useNavigate } from "react-router";
-import {logOut as reduxLogout} from '../redux/authSlice'
+import { logOut as reduxLogout } from "../redux/authSlice";
 export default function Account() {
   const userData = useSelector((state) => state.authSlice?.userData);
   const [sessions, setsession] = useState(null);
@@ -24,13 +24,13 @@ export default function Account() {
   const [changeoldpassword, setChangeOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const getLogOut = async () => {
-      await logout();
-      dispatch(reduxLogout());
-      navigate("/")
-    };
-  
+    await logout();
+    dispatch(reduxLogout());
+    navigate("/");
+  };
+
   useEffect(() => {
     const listSession = async () => {
       const session = await getSession();
@@ -39,13 +39,12 @@ const navigate = useNavigate()
     listSession();
   }, []);
   const submitName = async () => {
-    console.log(name);
 
     const data = await changeName(name);
     if (data) {
       setAlert(true);
       setAlertMessage("Successfully Updated Name");
-      setName("")
+      setName("");
     } else {
       setAlert(true);
       setAlertMessage("Error in Updating Name");
@@ -56,26 +55,24 @@ const navigate = useNavigate()
     if (data) {
       setAlert(true);
       setAlertMessage("Successfully Updated email");
-      setEmail("")
-      setOldPassword("")
+      setEmail("");
+      setOldPassword("");
     } else {
       setAlert(true);
       setAlertMessage("Error in Updating Email");
     }
   };
   const submitPassword = async () => {
-    const data = await changePassword( password,changeoldpassword);
+    const data = await changePassword(password, changeoldpassword);
     if (data) {
       setAlert(true);
       setAlertMessage("Successfully Updated password");
-      setChangeOldPassword("")
-      setPassword("")
+      setChangeOldPassword("");
+      setPassword("");
     } else {
-
       setAlert(true);
       setAlertMessage("Error in Updating Password");
     }
-    
   };
 
   return (
@@ -373,7 +370,10 @@ const navigate = useNavigate()
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
-        <button className="bg-red-700 hover:bg-red-800 px-6 py-3 rounded-lg text-white w-full transition-colors duration-200 font-medium flex items-center justify-center gap-2" onClick={()=>getLogOut()}>
+        <button
+          className="bg-red-700 hover:bg-red-800 px-6 py-3 rounded-lg text-white w-full transition-colors duration-200 font-medium flex items-center justify-center gap-2"
+          onClick={() => getLogOut()}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -391,7 +391,6 @@ const navigate = useNavigate()
           </svg>
           Sign Out
         </button>
-      
       </div>
     </div>
   );
