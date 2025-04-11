@@ -2,6 +2,7 @@ import { ID } from "appwrite";
 import { databases } from "./config";
 const databaseId = import.meta.env.VITE_APP_DATABASE_ID;
 const collectionId = import.meta.env.VITE_APP_COLLECTION_ID;
+
 export const CreateBlog = async (data) => {
   try {
     return await databases.createDocument(
@@ -36,9 +37,9 @@ export const DeletingBlog = async (docId) => {
     throw new Error("Error in deleting blog", error.message);
   }
 };
-export const GettingAllBlog = async () => {
+export const GettingAllBlog = async (qurey) => {
   try {
-    return await databases.listDocuments(databaseId, collectionId);
+    return await databases.listDocuments(databaseId, collectionId, qurey);
   } catch (error) {
     console.log(error);
     throw new Error("Error in updating blog", error.message);
