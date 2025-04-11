@@ -15,13 +15,13 @@ If you are developing a production application, we recommend using TypeScript an
 
 ## Total number of line of code in this directory
 
-###  `with no blank and comment`
-find . -name "*.js" -type f -exec cat {} + | grep -vE '^\s*($|\/\/)' | wc -l
+####  `with no blank and comment`
+find . -name "*.jsx" -type f -exec cat {} + | grep -vE '^\s*($|\/\/)' | wc -l
 
 1564
 
-### `with blank and comment `
+#### `with blank and comment `
 
-find . -name "*.js" -type f -exec cat {} + | wc -l
+find . -name "*.jsx" -type f -exec cat {} + | wc -l
 
 1694

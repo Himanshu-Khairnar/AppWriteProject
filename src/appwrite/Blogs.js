@@ -1,11 +1,13 @@
+import { ID } from "appwrite";
 import { databases } from "./config";
-
-export const CreateBlog = async (data, docId) => {
+const databaseId = import.meta.env.VITE_APP_DATABASE_ID;
+const collectionId = import.meta.env.VITE_APP_COLLECTION_ID;
+export const CreateBlog = async (data) => {
   try {
     return await databases.createDocument(
-      "<DATABASE_ID>",
-      "<COLLECTION_ID>",
-      docId,
+      databaseId,
+      collectionId,
+      ID.unique(),
       data
     );
   } catch (error) {
@@ -13,12 +15,12 @@ export const CreateBlog = async (data, docId) => {
     throw new Error("Error in creating blog", error.message);
   }
 };
-export const UpdateBlog = async (data, docId) => {
+export const UpdateBlog = async (data) => {
   try {
     return await databases.updateDocument(
-      "<DATABASE_ID>",
-      "<COLLECTION_ID>",
-      docId,
+      databaseId,
+      collectionId,
+      ID.unique(),
       data
     );
   } catch (error) {
@@ -26,13 +28,9 @@ export const UpdateBlog = async (data, docId) => {
     throw new Error("Error in updating blog", error.message);
   }
 };
-export const DeletingBlog = async (data, docId) => {
+export const DeletingBlog = async (docId) => {
   try {
-    return await databases.deleteDocument(
-      "<DATABASE_ID>",
-      "<COLLECTION_ID>",
-      docId
-    );
+    return await databases.deleteDocument(databaseId, collectionId, docId);
   } catch (error) {
     console.log(error);
     throw new Error("Error in deleting blog", error.message);
@@ -40,24 +38,15 @@ export const DeletingBlog = async (data, docId) => {
 };
 export const GettingAllBlog = async () => {
   try {
-    return await databases.listDocuments(
-      "<DATABASE_ID>", // databaseId
-      "<COLLECTION_ID>", // collectionId
-      [] // queries (optional)
-    );
+    return await databases.listDocuments(databaseId, collectionId);
   } catch (error) {
     console.log(error);
     throw new Error("Error in updating blog", error.message);
   }
 };
-export const GettingBlog = async (doc) => {
+export const GettingBlog = async (docId) => {
   try {
-    return await databases.getDocument(
-      "<DATABASE_ID>", // databaseId
-      "<COLLECTION_ID>", // collectionId
-      "<DOCUMENT_ID>", // documentId
-      [] // queries (optional)
-    );
+    return await databases.getDocument(databaseId, collectionId, docId);
   } catch (error) {
     console.log(error);
     throw new Error("Error in updating blog", error.message);
