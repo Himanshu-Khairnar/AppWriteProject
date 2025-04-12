@@ -33,20 +33,24 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-10 gap-5 md:gap-10 px-4 md:px-8 max-w-6xl mx-auto">
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-5 flex-1 md:pr-5 w-full"
+        className="w-full md:w-1/2 max-w-md space-y-6"
       >
-        <div className="text-2xl md:text-3xl font-bold flex items-center justify-center gap-2 mb-8">
-          <h1 className="text-center">
-            Hello, Welcome to <span className="font-mono"> Blogger</span>
+        <div className="text-center">
+          <h1 className="text-3xl font-extrabold flex items-center justify-center gap-2">
+            Hello, Welcome to <span className="font-mono">Blogger</span>
+            <img src="blogger.png" alt="Blogger logo" className="h-8" />
           </h1>
-          <img src="blogger.png" alt="Blogger logo" className="h-8 md:h-10" />
+          <p className="mt-2 text-sm text-gray-600">
+            Create your free account to get started
+          </p>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="name" className="block mb-1 font-medium">
+        {/* Full Name */}
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium mb-1">
             Full Name*
           </label>
           <input
@@ -56,15 +60,16 @@ export default function SignUp() {
               required: "Full Name is required",
               maxLength: { value: 50, message: "Max length is 50 characters" },
             })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
+            className="bg-secondaryBg p-3 border focus:outline-none focus:ring-2 focus:ring-gray-400 w-full rounded-lg shadow-sm"
           />
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.name?.message && "*" + errors.name?.message}
           </p>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="email" className="block mb-1 font-medium">
+        {/* Email */}
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">
             Email*
           </label>
           <input
@@ -79,15 +84,16 @@ export default function SignUp() {
                 message: "Invalid email address",
               },
             })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
+            className="bg-secondaryBg p-3 border focus:outline-none focus:ring-2 focus:ring-gray-400 w-full rounded-lg shadow-sm"
           />
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.email?.message && "*" + errors.email?.message}
           </p>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="password" className="block mb-1 font-medium">
+        {/* Password */}
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium mb-1">
             Password*
           </label>
           <input
@@ -99,38 +105,39 @@ export default function SignUp() {
               minLength: { value: 8, message: "Min length is 8 characters" },
               validate: {
                 hasUpperCase: (value) =>
-                  /[A-Z]/.test(value) ||
-                  "Password must contain at least one uppercase letter",
+                  /[A-Z]/.test(value) || "Must contain an uppercase letter",
                 hasNumber: (value) =>
-                  /[0-9]/.test(value) ||
-                  "Password must contain at least one number",
+                  /[0-9]/.test(value) || "Must contain a number",
                 hasLowerCase: (value) =>
-                  /[a-z]/.test(value) ||
-                  "Password must contain at least one lowercase letter",
+                  /[a-z]/.test(value) || "Must contain a lowercase letter",
               },
             })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
+            className="bg-secondaryBg p-3 border focus:outline-none focus:ring-2 focus:ring-gray-400 w-full rounded-lg shadow-sm"
           />
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.password?.message && "*" + errors.password?.message}
           </p>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="confirmPassword" className="block mb-1 font-medium">
+        {/* Confirm Password */}
+        <div>
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium mb-1"
+          >
             Confirm Password*
           </label>
           <input
-            type="password"
             id="confirmPassword"
             placeholder="*****"
+            type="password"
             {...register("confirmPassword", {
               required: "Confirm Password is required",
               minLength: { value: 8, message: "Min length is 8 characters" },
               validate: (value) =>
                 value === getValues("password") || "Passwords do not match",
             })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
+            className="bg-secondaryBg p-3 border focus:outline-none focus:ring-2 focus:ring-gray-400 w-full rounded-lg shadow-sm"
           />
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.confirmPassword?.message &&
@@ -138,25 +145,27 @@ export default function SignUp() {
           </p>
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="py-3 px-6 bg-primaryText rounded-lg w-full md:w-auto font-medium transition-all hover:opacity-90 mt-4"
+          className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-base font-medium rounded-lg text-white bg-primaryText hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryText transition-all duration-200"
         >
           Create Account
         </button>
 
-        <p className="text-sm text-center mt-4">
+        <p className="text-sm text-center">
           Already have an account?{" "}
-          <a href="#" className="font-medium underline">
+          <a href="/login" className="font-medium underline text-primaryText">
             Login
           </a>
         </p>
       </form>
 
-      <div className="hidden md:flex flex-1 items-center justify-center">
+      {/* Right Side Image */}
+      <div className="hidden md:block md:w-1/2 p-12">
         <img
           src="signin.svg"
-          alt="Sign in illustration"
+          alt="Sign up illustration"
           className="max-h-[550px] object-contain w-full"
         />
       </div>

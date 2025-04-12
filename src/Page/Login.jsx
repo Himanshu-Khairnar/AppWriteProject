@@ -4,12 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { login as LoginUser } from "../appwrite/User";
 import { useDispatch } from "react-redux";
 import { login as LoginRedux } from "../redux/authSlice";
+
 export default function Login() {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -31,75 +31,83 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-10 gap-5 md:gap-10 px-4 md:px-8 max-w-6xl mx-auto">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-5 flex-1 md:pr-5 w-full"
-      >
-        <div className="text-2xl md:text-3xl font-bold flex items-center justify-center gap-2 mb-8">
-          <h1 className="text-center">
-            Welcome Back to <span className="font-mono"> Blogger</span>
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="w-full md:w-1/2 max-w-md space-y-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-extrabold flex items-center justify-center gap-2">
+            Welcome Back to <span className="font-mono">Blogger</span>
+            <img src="blogger.png" alt="Blogger logo" className="h-8 inline-block" />
           </h1>
-          <img src="blogger.png" alt="Blogger logo" className="h-8 md:h-10" />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="email" className="block mb-1 font-medium">
-            Email*
-          </label>
-          <input
-            id="email"
-            placeholder="doe@xyz.com"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              maxLength: { value: 100, message: "Email is too long" },
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
-              },
-            })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
-          />
-          <p className="text-red-500 text-xs mt-1 h-4">
-            {errors.email?.message && "*" + errors.email?.message}
+          <p className="mt-2 text-sm text-gray-600">
+            Sign in to access your account
           </p>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="password" className="block mb-1 font-medium">
-            Password*
-          </label>
-          <input
-            id="password"
-            placeholder="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-            })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
-          />
-          <p className="text-red-500 text-xs mt-1 h-4">
-            {errors.password?.message && "*" + errors.password?.message}
-          </p>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
+          <div className="rounded-md shadow-sm space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-1">
+                Email Address*
+              </label>
+              <input
+                id="email"
+                placeholder="your.email@example.com"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  maxLength: { value: 100, message: "Email is too long" },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+                className="bg-secondaryBg p-3 border focus:outline-none focus:ring-2 focus:ring-gray-400 w-full rounded-lg shadow-sm"
+              />
+              <p className="text-red-500 text-xs mt-1 h-4">
+                {errors.email?.message && "*" + errors.email?.message}
+              </p>
+            </div>
 
-        <button
-          type="submit"
-          className="py-3 px-6 bg-primaryText rounded-lg w-full md:w-auto font-medium transition-all hover:opacity-90 mt-4"
-        >
-          Login
-        </button>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium mb-1">
+                Password*
+              </label>
+              <input
+                id="password"
+                placeholder="Enter your password"
+                type="password"
+                {...register("password", {
+                  required: "Password is required",
+                })}
+                className="bg-secondaryBg p-3 border focus:outline-none focus:ring-2 focus:ring-gray-400 w-full rounded-lg shadow-sm"
+              />
+              <p className="text-red-500 text-xs mt-1 h-4">
+                {errors.password?.message && "*" + errors.password?.message}
+              </p>
+            </div>
+          </div>
 
-        <p className="text-sm text-center mt-4">
-          Don't have an account?{" "}
-          <Link to="/signup" className="font-medium underline">
-            Sign Up
-          </Link>
-        </p>
-      </form>
+          <div>
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-base font-medium rounded-lg text-white bg-primaryText hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryText transition-all duration-200"
+            >
+              Login
+            </button>
+          </div>
 
-      <div className="hidden md:flex flex-1 items-center justify-center">
+          <div className="text-center">
+            <p className="text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="font-medium underline text-primaryText">
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div className="hidden md:block md:w-1/2 p-12">
         <img
           src="Login.svg"
           alt="Sign in illustration"

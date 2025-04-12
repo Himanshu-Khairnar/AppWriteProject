@@ -135,12 +135,16 @@ export default function Toggle({ toggle, setToggle }) {
                 <label className="block text-sm font-medium text-gray-700 dark:text-white">
                   Upload Image
                 </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  {...register("avatar")}
-                  className="w-full px-3 py-2 border rounded-lg dark:bg-gray-800 dark:text-white dark:border-gray-600"
-                />
+                <div className="bg-gray-800 rounded-lg shadow-sm p-4 border-dashed border-2 border-gray-300 mt-2 ">
+                  <input
+                    id="avatar"
+                    accept="image/*"
+                    type="file"
+                    {...register("heroImage")}
+                    className="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-gray-800 hover:file:bg-gray-400 
+              w-full transition-all duration-200 outline-gray-400"
+                  />
+                </div>
                 {errors.image && (
                   <p className="text-red-500 text-sm">{errors.image.message}</p>
                 )}

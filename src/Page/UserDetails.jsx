@@ -88,19 +88,20 @@ export default function UserDetails() {
           </p>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 ">
           <label htmlFor="avatar" className="block mb-1 font-medium">
             Avatar
           </label>
-          <input
-            id="avatar"
-            type="file"
-            accept="image/*"
-            {...register("avatar")}
-            className="bg-secondaryBg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-gray-800 hover:file:bg-gray-400 
-    p-2 w-full rounded-lg shadow-sm transition-all duration-200 outline-gray-400"
-          />
-
+          <div className="bg-secondaryBg rounded-lg shadow-sm p-4 border-dashed border-2 border-gray-300">
+            <input
+              id="avatar"
+              accept="image/*"
+              type="file"
+              {...register("heroImage")}
+              className="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-gray-800 hover:file:bg-gray-400 
+              w-full transition-all duration-200 outline-gray-400"
+            />
+          </div>
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.avatar?.message && "*" + errors.avatar?.message}
           </p>
