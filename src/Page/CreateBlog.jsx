@@ -1,20 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import RichTextEditor from "../components/RichTextEditor";
+import { useSelector } from "react-redux";
+import { CreateBlogDoc } from "../appwrite/Blogs";
 
 export default function CreateBlog() {
   const {
     handleSubmit,
     register,
+    control,
+    getValues,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: "wwvdd",
+      heroImage: "",
+      content: "",
+      type: "blog",
+      tags: "wvdvd",
+      userId: "",
+    },
+  });
 
-  const submit = (data) => {
+  const userData = useSelector((state) => state.authSlice.userData);
+  console.log(userData);
+
+  useEffect(() => {
+    setValue("userId", userData?.$id);
+  }, [userData]);
+  const submit = async (data) => {
     console.log(data);
+
+    const res = await CreateBlogDoc(data);
+    console.log(res);
   };
 
   return (
-    <div className="mt-10 max-w-3xl mx-auto">
+    <div className="mt-10 max-w-6xl mx-auto">
       <h2 className="text-2xl font-bold mb-6">Create New Blog Post</h2>
       <form onSubmit={handleSubmit(submit)} className="space-y-6">
         {/* Title */}
@@ -75,7 +98,9 @@ export default function CreateBlog() {
           </label>
           <div className="rounded-lg overflow-hidden shadow-sm">
             <RichTextEditor
-              {...register("content", { required: "Content is required" })}
+              name="content"
+              control={control}
+              defaultValue={getValues("content")}
             />
           </div>
           <p className="text-red-500 text-xs mt-1 h-4">
