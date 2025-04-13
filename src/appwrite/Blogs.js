@@ -6,7 +6,6 @@ const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
 
 export const CreateBlogDoc = async (data) => {
   try {
-    console.log("createDoc",data);
     
     const image = await storage.createFile(
       bucketId,
@@ -14,7 +13,6 @@ export const CreateBlogDoc = async (data) => {
       data?.heroImage[0]
     );
     const getPreview = await storage.getFileView(bucketId,image.$id).href
-    console.log(data);
     
     return await databases.createDocument(
       databaseId,

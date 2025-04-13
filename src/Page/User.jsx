@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getImagePreview, logout } from "../appwrite/User";
-import { logOut } from "../redux/authSlice";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   MoveUpRight,
@@ -13,37 +11,20 @@ import {
 import Toggle from "../components/Toggle";
 
 export default function User() {
-  const [Image, setImage] = useState("");
-const [toggle,settoggle] = useState(false)
+  const [toggle, settoggle] = useState(false);
   const data = useSelector((state) => state.authSlice?.userData);
   const detail = useSelector((state) => state.authSlice?.userDetail);
 
-  useEffect(() => {
-    const getPreview = async (fileId) => {
-      try {
-        const imageUrl = await getImagePreview(fileId);
-        setImage(imageUrl);
-      } catch (error) {
-        console.error("Failed to fetch image preview:", error);
-      }
-    };
-
-    if (detail?.Avatar) {
-      getPreview(detail.Avatar);
-    }
-  }, [detail?.Avatar]);
-
   return (
     <div className="mt-10 relative ">
-      
       {toggle && <Toggle toggle={toggle} setToggle={settoggle} />}
       <div className="bg-opacity-20 shadow-lg flex justify-center">
         <div className="flex flex-col items-center  p-10 bg-opacity-20  backdrop-blur-sm  rounded-xl  shadow-lg text-center md:flex-row md:items-start md:text-left gap-10">
           <div className="w-full md:w-auto  flex  items-center md:justify-start">
-            {Image ? (
+            {detail?.Avatar ? (
               <div className="relative group">
                 <img
-                  src={Image}
+                  src={detail?.Avatar}
                   alt="User avatar"
                   className="rounded-full w-36 h-36 object-cover border-4 border-gray-300 shadow-lg transition-transform duration-300"
                 />

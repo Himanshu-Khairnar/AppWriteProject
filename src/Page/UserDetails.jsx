@@ -97,7 +97,7 @@ export default function UserDetails() {
               id="avatar"
               accept="image/*"
               type="file"
-              {...register("heroImage")}
+              {...register("avatar")}
               className="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-gray-800 hover:file:bg-gray-400 
               w-full transition-all duration-200 outline-gray-400"
             />

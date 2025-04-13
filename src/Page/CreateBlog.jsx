@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import RichTextEditor from "../components/RichTextEditor";
 import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ export default function CreateBlog() {
     register,
     control,
     getValues,
-    setValue,
+    setValue,watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -22,18 +22,25 @@ export default function CreateBlog() {
       userId: "",
     },
   });
+  const [image,setImage] = useState()
 
   const userData = useSelector((state) => state.authSlice.userData);
-  console.log(userData);
+  const heroImageFile = watch("heroImage");
 
+  useEffect(() => {
+    if (heroImageFile && heroImageFile.length > 0) {
+      const file = heroImageFile[0];
+      const objectUrl = URL.createObjectURL(file);
+      setImage(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [heroImageFile]);
   useEffect(() => {
     setValue("userId", userData?.$id);
   }, [userData]);
   const submit = async (data) => {
-    console.log(data);
 
     const res = await CreateBlogDoc(data);
-    console.log(res);
   };
 
   return (
@@ -87,7 +94,12 @@ export default function CreateBlog() {
             {errors.heroImage?.message && "*" + errors.heroImage?.message}
           </p>
         </div>
-
+        {image && (
+          <img
+            src={image}
+            className="w-full  border-[1px] border-gray-500 mx-auto"
+          />
+        )}
         {/* Content */}
         <div>
           <label

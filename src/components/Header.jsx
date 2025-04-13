@@ -1,9 +1,7 @@
 import { Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, Link, useNavigate } from "react-router";
-import { userDetails } from "../redux/authSlice";
-import { getImagePreview } from "../appwrite/User";
 
 export default function Header() {
     const user = useSelector((state) => state.authSlice?.userData);
@@ -31,20 +29,6 @@ export default function Header() {
 
  const imgId = userDetail?.Avatar;
 
-  useEffect(() => {
-    const getPreview = async (fileId) => {
-      try {
-        const imageUrl = await getImagePreview(fileId);
-        setImage(imageUrl);
-      } catch (error) {
-        console.error("Failed to fetch image preview:", error);
-      }
-    };
-
-    if (imgId) {
-      getPreview(imgId);
-    }
-  }, [userDetail]);
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between ">
@@ -110,10 +94,10 @@ export default function Header() {
             className="h-10 w-10 p-2"
           />
         </div>
-        {user ? (
+        {userDetail ? (
           <Link to={`/account`}>
             <img
-              src={image ? image : "avatar.png"}
+              src={userDetail?.Avatar ? userDetail.Avatar : "avatar.png"}
               alt=""
               className="h-9 w-9 border-[1px] rounded-full bg-white"
             />

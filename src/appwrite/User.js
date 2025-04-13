@@ -59,14 +59,13 @@ export const isSlugUnique = async (slug) => {
 };
 export const createUserDetails = async (data) => {
   try {
-    console.log(data);
-
+    
     const image = await storage.createFile(
       bucketId,
       ID.unique(),
       data?.avatar[0]
     );
-
+    const url = await storage.getFileView(bucketId, image.$id).href;
     return await databases.createDocument(
       databaseId,
       collectionId,
@@ -74,7 +73,7 @@ export const createUserDetails = async (data) => {
       {
         username: data.username,
         bio: data.bio,
-        Avatar: image.$id,
+        Avatar: url,
         Github: data.github,
         userId: data.userId,
       }
@@ -86,17 +85,19 @@ export const createUserDetails = async (data) => {
 };
 export const updateUserDetails = async (data) => {
   try {
-    console.log(data);
-    let image;
+    let url
     if (data?.avatar) {
-      image = await storage.createFile(bucketId, ID.unique(), data?.avatar[0]);
-      await storage.deleteFile(bucketId,data?.avatarId)
+    let   image = await storage.createFile(bucketId, ID.unique(), data?.avatar[0]);
+       url = await storage.getFileView(bucketId, image.$id).href;
+    const fileId = data?.avatarId.match(/\/files\/(.*?)\/view/)[1];
+
+      await storage.deleteFile(bucketId, fileId);
     }
 
     return await databases.updateDocument(databaseId, collectionId, data?.id, {
       username: data.username,
       bio: data.bio,
-      Avatar: image ? image.$id : data.avatarId,
+      Avatar: url ? url: data.avatarId,
       Github: data.github,
       userId: data.userId,
     });
@@ -110,14 +111,7 @@ export const getUserDetails = async (userId) => {
     Query.equal("userId", userId),
   ]);
 };
-export const getImagePreview = (fileId) => {
-  try {
-    return storage.getFileView(bucketId, fileId).href;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error in preview image", error.message);
-  }
-};
+
 export const changeName = async (name) => {
   try {
     return await await account.updateName(name);
@@ -136,7 +130,6 @@ export const changeEmail = async (email, password) => {
 };
 export const changePassword = async (password, oldpassword) => {
   try {
-
     return await await account.updatePassword(password, oldpassword);
   } catch (error) {
     console.log(error);

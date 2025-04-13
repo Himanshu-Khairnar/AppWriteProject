@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Alert from "./Alert";
 import { useSelector } from "react-redux";
-import { getImagePreview, updateUserDetails } from "../appwrite/User";
+import {  updateUserDetails } from "../appwrite/User";
 import { RefreshCcw } from "lucide-react";
 
 export default function Toggle({ toggle, setToggle }) {
@@ -14,10 +13,9 @@ export default function Toggle({ toggle, setToggle }) {
     setValue,
     watch,
   } = useForm();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
 
   const data = useSelector((state) => state.authSlice?.userDetail);
-  console.log(data);
 
   const userData = useSelector((state) => state.authSlice?.userData);
   const avatarFile = watch("avatar");
@@ -40,18 +38,7 @@ export default function Toggle({ toggle, setToggle }) {
       avatarId: data?.Avatar,
     });
 
-    const getPreview = async (fileId) => {
-      try {
-        const imageUrl = await getImagePreview(fileId);
-        setImage(imageUrl);
-      } catch (error) {
-        console.error("Failed to fetch image preview:", error);
-      }
-    };
-
-    if (data?.Avatar) {
-      getPreview(data?.Avatar);
-    }
+   
   }, [data]);
 
   const changeName = () => {
@@ -64,6 +51,7 @@ export default function Toggle({ toggle, setToggle }) {
   const onSubmit = async (data) => {
     
     const res = await updateUserDetails(data);
+  
     window.location.reload();
   };
 
@@ -76,7 +64,6 @@ export default function Toggle({ toggle, setToggle }) {
       >
         <div className="p-4 w-full max-w-2xl max-h-full">
           <div className="bg-white rounded-lg shadow-sm dark:bg-gray-700">
-            {/* Modal Header */}
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Update Profile
@@ -90,7 +77,6 @@ export default function Toggle({ toggle, setToggle }) {
               </button>
             </div>
 
-            {/* Form */}
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="p-4 md:p-5 space-y-4"
@@ -119,7 +105,6 @@ export default function Toggle({ toggle, setToggle }) {
                 )}
               </div>
 
-              {/* Bio */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-white">
                   Bio
@@ -130,7 +115,6 @@ export default function Toggle({ toggle, setToggle }) {
                 />
               </div>
 
-              {/* Image */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-white">
                   Upload Image
@@ -140,13 +124,13 @@ export default function Toggle({ toggle, setToggle }) {
                     id="avatar"
                     accept="image/*"
                     type="file"
-                    {...register("heroImage")}
+                    {...register("avatar")}
                     className="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-gray-800 hover:file:bg-gray-400 
               w-full transition-all duration-200 outline-gray-400"
                   />
                 </div>
-                {errors.image && (
-                  <p className="text-red-500 text-sm">{errors.image.message}</p>
+                {errors.avatar && (
+                  <p className="text-red-500 text-sm">{errors.avatar.message}</p>
                 )}
               </div>
               {image && (
