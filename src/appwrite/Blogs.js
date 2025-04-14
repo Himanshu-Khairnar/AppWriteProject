@@ -6,14 +6,13 @@ const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
 
 export const CreateBlogDoc = async (data) => {
   try {
-    
     const image = await storage.createFile(
       bucketId,
       ID.unique(),
       data?.heroImage[0]
     );
-    const getPreview = await storage.getFileView(bucketId,image.$id).href
-    
+    const getPreview = await storage.getFileView(bucketId, image.$id).href;
+
     return await databases.createDocument(
       databaseId,
       collectionId,
@@ -32,14 +31,35 @@ export const CreateBlogDoc = async (data) => {
     throw new Error("Error in creating blog", error.message);
   }
 };
-export const UpdateBlog = async (data) => {
+export const UpdateBlogs = async (data) => {
   try {
-    return await databases.updateDocument(
-      databaseId,
-      collectionId,
-      ID.unique(),
-      data
-    );
+    console.log(data);
+
+    let getPreview;
+    if (data.heroImage[0]) {
+      const image = await storage.createFile(
+        bucketId,
+        ID.unique(),
+        data?.heroImage[0]
+      );
+      console.log(image);
+
+      getPreview = storage.getFileView(bucketId, image.$id).href;
+      console.log(getPreview);
+
+      const fileId = data?.image.match(/\/files\/(.*?)\/view/)[1];
+      console.log(fileId);
+      
+      await storage.deleteFile(bucketId, fileId);
+    }
+    return await databases.updateDocument(databaseId, collectionId, data.id, {
+      title: data.title,
+      featured_image: getPreview || data?.image,
+      content: data.content,
+      tags: data.tags,
+      userId: data.userId,
+      type: data.type,
+    });
   } catch (error) {
     console.log(error);
     throw new Error("Error in updating blog", error.message);

@@ -18,10 +18,12 @@ If you are developing a production application, we recommend using TypeScript an
 ####  `with no blank and comment`
 find . -name "*.jsx" -type f -exec cat {} + | grep -vE '^\s*($|\/\/)' | wc -l
 
-1564
+1756
 
 #### `with blank and comment `
 
 find . -name "*.jsx" -type f -exec cat {} + | wc -l
 
-1694
+1864
+
+
