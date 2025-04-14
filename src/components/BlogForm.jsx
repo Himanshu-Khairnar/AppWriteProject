@@ -119,7 +119,6 @@ export default function BlogForm({ data, type }) {
           </p>
         </div>
 
-        {/* Image Preview */}
         {image && (
           <img
             src={image}
@@ -128,7 +127,6 @@ export default function BlogForm({ data, type }) {
           />
         )}
 
-        {/* Content */}
         <div>
           <label htmlFor="content" className="block mb-2 font-medium text-sm">
             Content
@@ -143,7 +141,6 @@ export default function BlogForm({ data, type }) {
           </p>
         </div>
 
-        {/* Post Type */}
         <div>
           <label htmlFor="type" className="block mb-2 font-medium text-sm">
             Post Type
@@ -163,7 +160,6 @@ export default function BlogForm({ data, type }) {
           </p>
         </div>
 
-        {/* Tags */}
         <div>
           <label htmlFor="tags" className="block mb-2 font-medium text-sm">
             Tags
@@ -184,13 +180,12 @@ export default function BlogForm({ data, type }) {
           </p>
         </div>
 
-        {/* Submit */}
         <div className="flex justify-end mt-8">
           <button
             type="submit"
             className="bg-secondaryBg text-white px-6 py-3 rounded-lg hover:opacity-80 transition-all"
           >
-            {type === "edit" ? "Update Blog" : "Create Blog"}
+            {type === "update" ? "Update Blog" : "Create Blog"}
           </button>
         </div>
       </form>
