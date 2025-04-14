@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import RichTextEditor from "../components/RichTextEditor";
 import { useSelector } from "react-redux";
 import { CreateBlogDoc, UpdateBlogs } from "../appwrite/Blogs";
+import { useNavigate } from "react-router";
 
 export default function BlogForm({ data, type }) {
   const userData = useSelector((state) => state.authSlice.userData);
-
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -35,11 +36,11 @@ export default function BlogForm({ data, type }) {
       setValue("type", data.type || "blog");
       setValue("tags", data.tags || "");
       setValue("userId", data.userId || "");
-          if (data.featured_image) {
+      if (data.featured_image) {
         setImage(data.featured_image);
       }
       setValue("image", data.featured_image);
-      setValue("id",data?.$id)
+      setValue("id", data?.$id);
     }
   }, [data, setValue]);
 
@@ -55,15 +56,17 @@ export default function BlogForm({ data, type }) {
       setImage(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
     } else if (typeof heroImage === "string") {
-      setImage(heroImage); 
+      setImage(heroImage);
     }
   }, [heroImage]);
 
   const submit = async (formData) => {
     if (type === "create") {
       const res = await CreateBlogDoc(formData);
+      navigate(`/viewBlog?id=${res.$id}`);
     } else {
       const res = await UpdateBlogs(formData);
+      navigate(`/viewBlog?id=${res.$id}`);
     }
   };
 

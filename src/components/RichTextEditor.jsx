@@ -16,7 +16,7 @@ export default function RichTextEditor({ name, control, defaultValue = "" }) {
             toolbar:
               "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
           }}
-          initialValue="Welcome to TinyMCE!"
+          initialValue={defaultValue || ""}
           onEditorChange={onChange}
         />
       )}
