@@ -27,7 +27,7 @@ export default function Home() {
       <Heading data={"THE BLOG"} />
       {/*
        */}
-      <div className="mt-10">
+      <div className="mt-10 flex gap-10">
         {blogData?.map((post) => (
           <BlogCard key={post.$id} data={post} />
         ))}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CreateBlog from "./CreateBlog";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GettingBlog } from "../appwrite/Blogs";
 import BlogForm from "../components/BlogForm";
 
