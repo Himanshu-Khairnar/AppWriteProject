@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NewsLetter from "./NewsLetter";
 import { GettingAllBlog } from "../appwrite/Blogs";
 import { AllBlogsData } from "../redux/blogSlice";
+import BlogCard from "../components/BlogCard";
 
 export default function Home() {
   const blogData = useSelector((state) => state.blogSlice.allBlogs);
@@ -14,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const getAllBlogs = async () => {
       const res = await GettingAllBlog();
-      dispatch(AllBlogsData(res.documents[0]));
+      dispatch(AllBlogsData(res.documents));
     };
     getAllBlogs();
     return () => {
@@ -26,8 +27,11 @@ export default function Home() {
       <Heading data={"THE BLOG"} />
       {/*
        */}
-      { blogData && Object.keys(blogData).map(([key,value]) => (<p>{key} {value}</p>))}
-      <p className="text-white text-2xl">{data?.name}</p>
+      <div className="mt-10">
+        {blogData?.map((post) => (
+          <BlogCard key={post.$id} data={post} />
+        ))}
+      </div>
       <NewsLetter />
     </div>
   );
