@@ -9,11 +9,10 @@ class EmailService {
 
   async sendWelcomeEmail(email, name = "there") {
     try {
-      // Render React component to HTML
       const html = await renderAsync(EmailBiolerPlate({ name }));
 
       const { data, error } = await this.resend.emails.send({
-        from: "himanshuKhairnar@resend.dev", // Use your verified sender
+        from: "himanshuKhairnar@resend.dev",
         to: email,
         subject: "Welcome to Bloggers - Thanks for subscribing!",
         html: html,
