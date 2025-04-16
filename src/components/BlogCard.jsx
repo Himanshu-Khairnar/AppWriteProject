@@ -37,7 +37,6 @@ export default function BlogCard({ data }) {
             className="text-[15px] text-gray-400 line-clamp-2 h-[48px]"
           />
 
-          {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-2">
             {tags.map((tag, index) => (
               <span

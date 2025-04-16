@@ -67,7 +67,7 @@ export default function BlogPage() {
       </div>
 
       <div
-        className="prose prose-invert max-w-none"
+        className=" space-y-1"
         dangerouslySetInnerHTML={{ __html: blogData?.content }}
       />
     </div>
