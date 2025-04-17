@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { GettingBlog } from "../appwrite/Blogs";
+import { checkLike, GettingBlog } from "../appwrite/Blogs";
 import { Binoculars, ThumbsUp } from "lucide-react";
-
+import { disLike, addLike, addView } from "../appwrite/Blogs";
+import { useSelector } from "react-redux";
 export default function BlogPage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const [blogData, setBlogData] = useState(null);
-
+  const userData = useSelector((state) => state.authSlice.userData);
+  useEffect(() => {
+    async function addingView() {
+      await addView(id);
+    }
+    addingView();
+    return () => {
+      addingView();
+    };
+  }, [window.location.pathname]);
   useEffect(() => {
     const getData = async () => {
       const res = await GettingBlog(id);
@@ -17,7 +27,14 @@ export default function BlogPage() {
     };
     getData();
   }, []);
-
+  const setLike = async () => {
+    const isLiked = await checkLike(userData.$id, blogData.$id);
+    if (isLiked) {
+      await addLike(blogData.$id);
+    } else {
+      await disLike(blogData.$id);
+    }
+  };
   const tags = blogData?.tags?.split(",") || [];
 
   return (
@@ -48,10 +65,10 @@ export default function BlogPage() {
 
       <div className="flex gap-6 text-sm text-gray-400 mb-6 ">
         <p className="flex text-lg items-center gap-1   ">
-          <ThumbsUp /> {blogData?.likes}
+          <ThumbsUp onClick={() => setLike()} /> {blogData?.likes}
         </p>
         <p className="flex text-lg items-center gap-1">
-          <Binoculars /> {blogData?.views}
+          <Binoculars /> {blogData?.views + 1}
         </p>
       </div>
 

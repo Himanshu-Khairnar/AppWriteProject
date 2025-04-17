@@ -49,7 +49,7 @@ export const UpdateBlogs = async (data) => {
 
       const fileId = data?.image.match(/\/files\/(.*?)\/view/)[1];
       console.log(fileId);
-      
+
       await storage.deleteFile(bucketId, fileId);
     }
     return await databases.updateDocument(databaseId, collectionId, data.id, {
@@ -87,5 +87,54 @@ export const GettingBlog = async (docId) => {
   } catch (error) {
     console.log(error);
     throw new Error("Error in updating blog", error.message);
+  }
+};
+export const addView = async (docId) => {
+  try {
+    const blog = await databases.getDocument(databaseId, collectionId, docId);
+    return databases.updateDocument(databaseId, collectionId, docId, {
+      views: blog.views + 1,
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in adding view", error.message);
+  }
+};
+export const addLike = async (docId, userId) => {
+  try {
+    const blog = await databases.getDocument(databaseId, collectionId, docId);
+    const usersLike = [...blog.likedUserId, userId];
+    return databases.updateDocument(databaseId, collectionId, docId, {
+      likes: blog.likes + 1,
+      likedUserId: usersLike,
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in adding view", error.message);
+  }
+};
+export const disLike = async (docId, userId) => {
+  try {
+    const blog = await databases.getDocument(databaseId, collectionId, docId);
+    const usersLike = blog.likedUserId.filter((item) => item === userId);
+
+    return databases.updateDocument(databaseId, collectionId, docId, {
+      likes: blog.likes === 0 ? 0 : blog.likes - 1,
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in adding view", error.message);
+  }
+};
+export const checkLike = async (userId, docId) => {
+  try {
+    const blog = await databases.getDocument(databaseId, collectionId, docId);
+    console.log(blog);
+    if (blog.likedUserId === null) return false;
+    const hasLiked = blog.likedUserId.includes(userId);
+    hasLiked ? true : false;
+  } catch (error) {
+    console.log(error);
+    throw new Error("error in checking user", error.message);
   }
 };
