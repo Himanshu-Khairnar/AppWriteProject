@@ -9,16 +9,23 @@ export default function BlogPage() {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const [blogData, setBlogData] = useState(null);
+  const [liked, setLiked] = useState(false);
+  const likeCountIncrement = liked ? 1 : 0;
   const userData = useSelector((state) => state.authSlice.userData);
+  console.log(userData);
+  
   useEffect(() => {
     async function addingView() {
-      await addView(id);
+    const res =  await addView(id);
+      setBlogData(res)
+      const isLiked = await checkLike(userData?.$id, id);
+      setLiked(isLiked);
     }
-    addingView();
+    if (userData) addingView();
     return () => {
       addingView();
     };
-  }, [window.location.pathname]);
+  }, [location.pathname]);
   useEffect(() => {
     const getData = async () => {
       const res = await GettingBlog(id);
@@ -27,14 +34,23 @@ export default function BlogPage() {
     };
     getData();
   }, []);
-  const setLike = async () => {
-    const isLiked = await checkLike(userData.$id, blogData.$id);
-    if (isLiked) {
-      await addLike(blogData.$id);
-    } else {
-      await disLike(blogData.$id);
-    }
-  };
+ const toggleLike = async () => {
+   if (!userData || !blogData) return;
+
+   const isLiked = await checkLike(userData.$id, blogData.$id);
+
+   if (!isLiked) {
+     await addLike(blogData?.$id, userData?.$id);
+     setLiked(true);
+   } else {
+     await disLike(blogData?.$id, userData?.$id);
+     setLiked(false);
+   }
+
+   const updated = await GettingBlog(blogData.$id);
+   setBlogData(updated);
+ };
+
   const tags = blogData?.tags?.split(",") || [];
 
   return (
@@ -65,7 +81,15 @@ export default function BlogPage() {
 
       <div className="flex gap-6 text-sm text-gray-400 mb-6 ">
         <p className="flex text-lg items-center gap-1   ">
-          <ThumbsUp onClick={() => setLike()} /> {blogData?.likes}
+          <ThumbsUp
+            onClick={() => toggleLike()}
+            color={liked ? "white" : "gray"}
+            className={`w-6 h-6 cursor-pointer transition  ${
+              liked ? "text-white" : "text-gray-400 hover:text-purple-400"
+            }`}
+          />
+
+          {blogData?.likes}
         </p>
         <p className="flex text-lg items-center gap-1">
           <Binoculars /> {blogData?.views + 1}

@@ -44,7 +44,7 @@ export default function App() {
     return () => {
       getAccountDetails();
     };
-  }, [window.location.pathname]);
+  }, [location.pathname]);
 
   return (
     <div className="bg-primaryBg text-white min-h-screen px-6 md:px-12 lg:px-24 py-12">

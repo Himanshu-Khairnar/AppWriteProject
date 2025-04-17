@@ -116,10 +116,11 @@ export const addLike = async (docId, userId) => {
 export const disLike = async (docId, userId) => {
   try {
     const blog = await databases.getDocument(databaseId, collectionId, docId);
-    const usersLike = blog.likedUserId.filter((item) => item === userId);
+const usersLike = blog.likedUserId.filter((item) => item !== userId);
 
     return databases.updateDocument(databaseId, collectionId, docId, {
       likes: blog.likes === 0 ? 0 : blog.likes - 1,
+      likedUserId:usersLike,
     });
   } catch (error) {
     console.log(error);
@@ -132,7 +133,7 @@ export const checkLike = async (userId, docId) => {
     console.log(blog);
     if (blog.likedUserId === null) return false;
     const hasLiked = blog.likedUserId.includes(userId);
-    hasLiked ? true : false;
+    return hasLiked;
   } catch (error) {
     console.log(error);
     throw new Error("error in checking user", error.message);
