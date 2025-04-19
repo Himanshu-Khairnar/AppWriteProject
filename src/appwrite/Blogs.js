@@ -1,4 +1,4 @@
-import { ID } from "appwrite";
+import { ID, Query } from "appwrite";
 import { databases, storage } from "./config";
 const databaseId = import.meta.env.VITE_APP_DATABASE_ID;
 const collectionId = import.meta.env.VITE_APP_COLLECTION_ID;
@@ -73,8 +73,12 @@ export const DeletingBlog = async (docId) => {
     throw new Error("Error in deleting blog", error.message);
   }
 };
-export const GettingAllBlog = async (qurey) => {
+export const GettingAllBlog = async (type) => {
   try {
+    const qurey =
+      type === "blog"
+        ? [Query.equal("type", "blog")]
+        : [Query.equal("type", "project")];
     return await databases.listDocuments(databaseId, collectionId, qurey);
   } catch (error) {
     console.log(error);
@@ -116,11 +120,11 @@ export const addLike = async (docId, userId) => {
 export const disLike = async (docId, userId) => {
   try {
     const blog = await databases.getDocument(databaseId, collectionId, docId);
-const usersLike = blog.likedUserId.filter((item) => item !== userId);
+    const usersLike = blog.likedUserId.filter((item) => item !== userId);
 
     return databases.updateDocument(databaseId, collectionId, docId, {
       likes: blog.likes === 0 ? 0 : blog.likes - 1,
-      likedUserId:usersLike,
+      likedUserId: usersLike,
     });
   } catch (error) {
     console.log(error);
@@ -137,5 +141,20 @@ export const checkLike = async (userId, docId) => {
   } catch (error) {
     console.log(error);
     throw new Error("error in checking user", error.message);
+  }
+};
+
+export const getRecentBlog = async (type) => {
+  try {
+    const query = [Query.orderDesc("$createdAt"), Query.limit(4)];
+    const additionQuery =
+      type === "blog"
+        ? [Query.equal("type", "blog")]
+        : Query.equal("type", "project");
+    query.push(additionQuery);
+    return await databases.listDocuments(databaseId, collectionId, query);
+  } catch (error) {
+    console.log(error);
+    throw new Error("error in getting recent blog", error.message);
   }
 };
