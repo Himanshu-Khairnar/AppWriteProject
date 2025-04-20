@@ -107,7 +107,7 @@ export default function BlogPage() {
       </div>
 
       <div
-        className=" space-y-1"
+        className=" space-y-1 "
         dangerouslySetInnerHTML={{ __html: blogData?.content }}
       />
     </div>

@@ -13,7 +13,7 @@ export default function BlogCard({ data }) {
       <article className="flex flex-col gap-3">
         <img
           src={data?.featured_image}
-          className="h-[240px] w-full object-cover"
+          className="h-[240px] w-full object-cover rounded group-hover:brightness-90"
           alt={data?.title}
         />
 
@@ -27,8 +27,8 @@ export default function BlogCard({ data }) {
             })}
           </p>
 
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">{data.title}</h2>
+          <div className="flex items-center justify-between ">
+            <h2 className="text-lg font-semibold ">{data.title}</h2>
             <MoveUpRight className="w-5 h-5 text-gray-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </div>
 

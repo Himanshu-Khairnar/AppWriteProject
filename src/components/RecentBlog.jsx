@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getRecentBlog, GettingAllBlog } from "../appwrite/Blogs";
-import BlogCard from "./BlogCard";
+import { getRecentBlog } from "../appwrite/Blogs";
+import { ArrowUpRight } from "lucide-react";
 
 export default function RecentBlog({ type }) {
   const [recentBlogs, setRecentBlogs] = useState([]);
@@ -8,10 +8,8 @@ export default function RecentBlog({ type }) {
   useEffect(() => {
     const getRecentBlogs = async () => {
       try {
-        const res = await getRecentBlog(type); // make sure `type` is passed as prop
-        setRecentBlogs(res);
-        console.log(res);
-        
+        const res = await getRecentBlog(type);
+        setRecentBlogs(res.documents);
       } catch (error) {
         console.error("Failed to fetch recent blogs:", error);
       }
@@ -20,131 +18,120 @@ export default function RecentBlog({ type }) {
     getRecentBlogs();
   }, [type]);
 
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-IN", {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+
+  const extractTags = (index) => recentBlogs[index]?.tags?.split(",") || [];
+
   return (
-    <div className="bg-slate-900 text-white p-8">
-      <h2 className="text-2xl font-bold mb-8">Recent blog posts</h2>
+    <div className="text-white py-10">
+      <h2 className="text-3xl font-bold mb-8">Recent Blog Posts</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* First row - Large post on left, small post on right */}
-        <div className="relative">
+        {/* Large Left Blog Card */}
+        <div className="rounded hover:shadow-md overflow-hidden hover:scale-[1.01] transition-all duration-300 group">
           <img
-            src={recentBlogs[0].featured_image}
-            alt={recentBlogs[0].title}
-            className="w-full h-64 object-cover mb-4"
+            src={recentBlogs[0]?.featured_image}
+            alt={recentBlogs[0]?.title}
+            className="w-full h-64 object-cover group-hover:brightness-90 transition"
           />
-          <div className="mb-2">
-            <span className="text-purple-400 text-sm">
-              {recentBlogs[0].date}
-            </span>
-          </div>
-          <div className="flex items-start justify-between">
-            <h3 className="text-xl font-bold">{recentBlogs[0].title}</h3>
-            <ArrowUpRight className="text-white" size={20} />
-          </div>
-          <p className="text-gray-400 mt-2 mb-4">
-            {recentBlogs[0].description}
-          </p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {recentBlogs[0].tags.map((tag, index) => (
-              <span
-                key={index}
-                className="text-sm px-3 py-1 rounded-full bg-white text-gray-800 font-medium border border-gray-700 hover:bg-purple-500 hover:text-white transition"
-              >
-                #{tag.trim()}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          {/* First small post */}
-          <div className="flex gap-4 mb-8">
-            <img
-              src={recentBlogs[1].featured_image}
-              alt={recentBlogs[1].title}
-              className="w-40 h-32 object-cover"
-            />
-            <div>
-              <div className="mb-1">
-                <span className="text-purple-400 text-sm">
-                  {recentBlogs[1].date}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold">{recentBlogs[1].title}</h3>
-              <p className="text-gray-400 text-sm mt-1 mb-2">
-                {recentBlogs[1].description}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {recentBlogs[0].tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="text-sm px-3 py-1 rounded-full bg-white text-gray-800 font-medium border border-gray-700 hover:bg-purple-500 hover:text-white transition"
-                  >
-                    #{tag.trim()}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Second small post */}
-          <div className="flex gap-4">
-            <img
-              src={recentBlogs[2].featured_image}
-              alt={recentBlogs[2].title}
-              className="w-40 h-32 object-cover"
-            />
-            <div>
-              <div className="mb-1">
-                <span className="text-purple-400 text-sm">
-                  {recentBlogs[2].date}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold">{recentBlogs[2].title}</h3>
-              <p className="text-gray-400 text-sm mt-1 mb-2">
-                {recentBlogs[2].description}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {recentBlogs[0].tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="text-sm px-3 py-1 rounded-full bg-white text-gray-800 font-medium border border-gray-700 hover:bg-purple-500 hover:text-white transition"
-                  >
-                    #{tag.trim()}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Second row - Full width post */}
-        <div className="lg:col-span-2 flex gap-4">
-          <img
-            src={recentBlogs[3].featured_image}
-            alt={recentBlogs[3].title}
-            className="w-1/2 h-48 object-cover"
-          />
-          <div className="w-1/2">
-            <div className="mb-1">
-              <span className="text-purple-400 text-sm">
-                {recentBlogs[3].date}
-              </span>
-            </div>
-            <div className="flex items-start justify-between">
-              <h3 className="text-xl font-bold">{recentBlogs[3].title}</h3>
-              {recentBlogs[3].hasArrow && (
-                <ArrowUpRight className="text-white" size={20} />
-              )}
-            </div>
-            <p className="text-gray-400 mt-2 mb-4 line-clamp-4">
-              {recentBlogs[3].description}
+          <div className="p-5">
+            <p className="text-purple-400 font-semibold mb-2">
+              {formatDate(recentBlogs[0]?.$createdAt)}
             </p>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {recentBlogs[0].tags.map((tag, index) => (
+            <div className="flex justify-between items-start">
+              <h3 className="text-xl font-bold transition">
+                {recentBlogs[0]?.title}
+              </h3>
+              <ArrowUpRight
+                className="text-white group-hover:text-purple-400 transition"
+                size={20}
+              />
+            </div>
+            <div
+              dangerouslySetInnerHTML={{ __html: recentBlogs[0]?.content }}
+              className="text-sm text-gray-400 mt-2 line-clamp-2"
+            />
+            <div className="flex flex-wrap gap-2 mt-4">
+              {extractTags(0).map((tag, i) => (
                 <span
-                  key={index}
-                  className="text-sm px-3 py-1 rounded-full bg-white text-gray-800 font-medium border border-gray-700 hover:bg-purple-500 hover:text-white transition"
+                  key={i}
+                  className="text-xs px-3 py-1 bg-white text-gray-800 rounded-full border border-gray-700 hover:bg-purple-500 hover:text-white transition"
+                >
+                  #{tag.trim()}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Smaller Cards */}
+        <div className="flex flex-col gap-8">
+          {[1, 2].map((index) => (
+            <div
+              key={index}
+              className="flex  rounded  hover:shadow-md overflow-hidden hover:scale-[1.01] transition-all duration-300 group"
+            >
+              <img
+                src={recentBlogs[index]?.featured_image}
+                alt={recentBlogs[index]?.title}
+                className="w-1/2 h-full rounded object-cover group-hover:brightness-90 transition"
+              />
+              <div className="p-4">
+                <p className="text-purple-400 font-semibold mb-1">
+                  {formatDate(recentBlogs[index]?.$createdAt)}
+                </p>
+                <h3 className="text-lg font-bold transition">
+                  {recentBlogs[index]?.title}
+                </h3>
+                <div
+                  dangerouslySetInnerHTML={{ __html: recentBlogs[3]?.content }}
+                  className="text-[15px] text-gray-400 line-clamp-2 h-[48px]"
+                />
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {extractTags(index).map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-xs px-2 py-1 bg-white text-gray-800 rounded-full border border-gray-700 hover:bg-purple-500 hover:text-white transition"
+                    >
+                      #{tag.trim()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Full Width Bottom Blog */}
+        <div className=" lg:col-span-2  rounded-xl hover:shadow-lg  overflow-hidden hover:scale-[1.01] transition-all duration-300 group flex flex-col lg:flex-row">
+          <img
+            src={recentBlogs[3]?.featured_image}
+            alt={recentBlogs[3]?.title}
+            className="w-full lg:w-1/2 h-48 object-cover group-hover:brightness-90 transition"
+          />
+          <div className="p-5 lg:w-1/2">
+            <p className="text-purple-400 font-semibold mb-2">
+              {formatDate(recentBlogs[3]?.$createdAt)}
+            </p>
+            <h3 className="text-xl font-bold  transition">
+              {recentBlogs[3]?.title}
+            </h3>
+            <div
+              dangerouslySetInnerHTML={{ __html: recentBlogs[3]?.content }}
+              className="text-[15px] text-gray-400 line-clamp-2 h-[48px]"
+            />
+
+            <div className="flex flex-wrap gap-2 mt-4">
+              {extractTags(3).map((tag, i) => (
+                <span
+                  key={i}
+                  className="text-xs px-3 py-1 bg-white text-gray-800 rounded-full border border-gray-700 hover:bg-purple-500 hover:text-white transition"
                 >
                   #{tag.trim()}
                 </span>

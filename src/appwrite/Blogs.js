@@ -146,12 +146,14 @@ export const checkLike = async (userId, docId) => {
 
 export const getRecentBlog = async (type) => {
   try {
-    const query = [Query.orderDesc("$createdAt"), Query.limit(4)];
-    const additionQuery =
-      type === "blog"
-        ? [Query.equal("type", "blog")]
-        : Query.equal("type", "project");
-    query.push(additionQuery);
+  const query = [Query.orderDesc("$createdAt"), Query.limit(4)].concat(
+    type === "blog"
+      ? [Query.equal("type", "blog")]
+      : [Query.equal("type", "project")]
+  );
+
+    console.log(query);
+
     return await databases.listDocuments(databaseId, collectionId, query);
   } catch (error) {
     console.log(error);
