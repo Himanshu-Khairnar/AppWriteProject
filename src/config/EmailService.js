@@ -23,7 +23,6 @@ class EmailService {
         return { success: false, error };
       }
 
-      console.log("Email sent successfully:", data);
       return { success: true, data };
     } catch (err) {
       console.error("Exception during email sending:", err);

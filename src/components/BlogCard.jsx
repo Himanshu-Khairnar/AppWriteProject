@@ -7,7 +7,7 @@ export default function BlogCard({ data }) {
 
   return (
     <Link
-      to={`/blog/${data?.$id}`}
+      to={`/viewblog?id=${data?.$id}`}
       className="max-w-[384px] overflow-hidden text-white transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg group border border-gray-700 rounded-lg"
     >
       <article className="flex flex-col gap-3">

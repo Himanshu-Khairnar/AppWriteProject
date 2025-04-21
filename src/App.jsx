@@ -19,6 +19,7 @@ import CreateBlog from "./Page/CreateBlog";
 import Account from "./Page/Account";
 import UpdateBlog from "./Page/UpdateBlog";
 import BlogPage from "./Page/BlogPage";
+import SearchPage from "./Page/SearchPage";
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -60,7 +61,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path={`/myblogs`} element={<User />} />
           <Route path={`/viewBlog`} element={<BlogPage />} />
-
+      <Route path={`/searchBlog`} element={<SearchPage/>} />
           <Route path="/adduserdetails" element={<UserDetails />} />
           <Route path="/updateBlog" element={<UpdateBlog />} />
           <Route path="/createBlog" element={<CreateBlog />} />

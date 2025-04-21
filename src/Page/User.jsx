@@ -31,7 +31,6 @@ export default function User() {
     const userBlog = async () => {
       try {
         const res = await GetUserBlog();
-        await console.log(res);
         await setBlogData(res);
       } catch (error) {
         console.error("Error fetching user blogs:", error);

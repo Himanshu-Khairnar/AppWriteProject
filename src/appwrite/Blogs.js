@@ -6,14 +6,11 @@ const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
 export const GetUserBlog = async () => {
   try {
     const userId = (await account.get()).$id;
-    console.log(userId);
-    
- const res = await databases.listDocuments(databaseId, collectionId, [
-   Query.equal("userId", userId),
- ]);
-    console.log(res.documents);
+
+    const res = await databases.listDocuments(databaseId, collectionId, [
+      Query.equal("userId", userId),
+    ]);
     return res.documents;
-    
   } catch (error) {
     console.log(error);
     throw new Error("error in getting user blog");
@@ -48,7 +45,6 @@ export const CreateBlogDoc = async (data) => {
 };
 export const UpdateBlogs = async (data) => {
   try {
-    console.log(data);
 
     let getPreview;
     if (data.heroImage[0]) {
@@ -57,13 +53,10 @@ export const UpdateBlogs = async (data) => {
         ID.unique(),
         data?.heroImage[0]
       );
-      console.log(image);
 
       getPreview = storage.getFileView(bucketId, image.$id).href;
-      console.log(getPreview);
 
       const fileId = data?.image.match(/\/files\/(.*?)\/view/)[1];
-      console.log(fileId);
 
       await storage.deleteFile(bucketId, fileId);
     }
@@ -166,11 +159,27 @@ export const getRecentBlog = async (type) => {
         : [Query.equal("type", "project")]
     );
 
-    console.log(query);
 
     return await databases.listDocuments(databaseId, collectionId, query);
   } catch (error) {
     console.log(error);
     throw new Error("error in getting recent blog", error.message);
+  }
+};
+export const searchBlogs = async (searchQuery) => {
+  try {
+
+
+    const response = await databases.listDocuments(databaseId, collectionId, [
+      Query.or([
+        Query.search("title", searchQuery),
+        Query.search("tags", searchQuery),
+        Query.search("content", searchQuery),
+      ]),
+    ]);
+
+    return response.documents;
+  } catch (error) {
+    console.error("Error fetching search results:", error);
   }
 };

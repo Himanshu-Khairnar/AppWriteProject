@@ -11,7 +11,6 @@ export default function BlogPage() {
   const [blogData, setBlogData] = useState(null);
   const [liked, setLiked] = useState(false);
   const userData = useSelector((state) => state.authSlice.userData);
-  console.log(userData);
 
   useEffect(() => {
     async function addingView() {
@@ -29,7 +28,6 @@ export default function BlogPage() {
     const getData = async () => {
       const res = await GettingBlog(id);
       setBlogData(res);
-      console.log(res);
     };
     getData();
   }, []);
