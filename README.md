@@ -5,6 +5,9 @@ A modern, full-stack blogging platform built with React (Vite), AppWrite, Tailwi
 ## 🌐 Live Demo
 [https://app-write-project-blog.vercel.app/]
 
+## 📑 Figma Design
+   Took inspiration from
+[https://www.figma.com/community/file/1235152009438565697]
 ## 📁 Project Structure
 ```
 AppWriteProjectBlog/
