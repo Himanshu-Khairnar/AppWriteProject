@@ -7,13 +7,13 @@ export default function BlogCard({ data }) {
 
   return (
     <Link
-      to={`/viewBlog?id=${data.$id}`}
-      className="max-w-[384px]  overflow-hidden   text-white  transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg group"
+      to={`/blog/${data?.$id}`}
+      className="max-w-[384px] overflow-hidden text-white transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg group border border-gray-700 rounded-lg"
     >
       <article className="flex flex-col gap-3">
         <img
           src={data?.featured_image}
-          className="h-[240px] w-full object-cover rounded group-hover:brightness-90"
+          className="h-[240px] w-full object-cover rounded-t group-hover:brightness-90"
           alt={data?.title}
         />
 
@@ -27,8 +27,8 @@ export default function BlogCard({ data }) {
             })}
           </p>
 
-          <div className="flex items-center justify-between ">
-            <h2 className="text-lg font-semibold ">{data.title}</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">{data?.title}</h2>
             <MoveUpRight className="w-5 h-5 text-gray-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </div>
 

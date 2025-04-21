@@ -1,9 +1,24 @@
 import { ID, Query } from "appwrite";
-import { databases, storage } from "./config";
+import { account, databases, storage } from "./config";
 const databaseId = import.meta.env.VITE_APP_DATABASE_ID;
 const collectionId = import.meta.env.VITE_APP_COLLECTION_ID;
 const bucketId = import.meta.env.VITE_APP_BUCKET_ID;
-
+export const GetUserBlog = async () => {
+  try {
+    const userId = (await account.get()).$id;
+    console.log(userId);
+    
+ const res = await databases.listDocuments(databaseId, collectionId, [
+   Query.equal("userId", userId),
+ ]);
+    console.log(res.documents);
+    return res.documents;
+    
+  } catch (error) {
+    console.log(error);
+    throw new Error("error in getting user blog");
+  }
+};
 export const CreateBlogDoc = async (data) => {
   try {
     const image = await storage.createFile(
@@ -143,14 +158,13 @@ export const checkLike = async (userId, docId) => {
     throw new Error("error in checking user", error.message);
   }
 };
-
 export const getRecentBlog = async (type) => {
   try {
-  const query = [Query.orderDesc("$createdAt"), Query.limit(4)].concat(
-    type === "blog"
-      ? [Query.equal("type", "blog")]
-      : [Query.equal("type", "project")]
-  );
+    const query = [Query.orderDesc("$createdAt"), Query.limit(4)].concat(
+      type === "blog"
+        ? [Query.equal("type", "blog")]
+        : [Query.equal("type", "project")]
+    );
 
     console.log(query);
 

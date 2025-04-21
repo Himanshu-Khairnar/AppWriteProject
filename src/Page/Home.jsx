@@ -8,14 +8,12 @@ import BlogCard from "../components/BlogCard";
 import RecentBlog from "../components/RecentBlog";
 
 export default function Home() {
-  const blogData = useSelector((state) => state.blogSlice.allBlogs) || []; // ✅ Fix here
+  const blogData = useSelector((state) => state.blogSlice.allBlogs) || []; 
   const dispatch = useDispatch();
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
 
-  // Compute current blogs for pagination
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = blogData.slice(indexOfFirstBlog, indexOfLastBlog);
@@ -46,7 +44,6 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Pagination Controls */}
       {blogData.length > blogsPerPage && (
         <div className="flex justify-center items-center mt-10 gap-4">
           <button
