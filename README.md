@@ -3,11 +3,11 @@
 A modern, full-stack blogging platform built with React (Vite), AppWrite, Tailwind CSS, and Redux. This application supports user authentication, blog creation with rich text editing, image uploads, and more.
 
 ## 🌐 Live Demo
-[https://app-write-project-blog.vercel.app/]
+https://app-write-project-blog.vercel.app/
 
 ## 📑 Figma Design
    Took inspiration from
-[https://www.figma.com/community/file/1235152009438565697]
+https://www.figma.com/community/file/1235152009438565697
 ## 📁 Project Structure
 ```
 AppWriteProjectBlog/
