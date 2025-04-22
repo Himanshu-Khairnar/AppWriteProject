@@ -48,8 +48,7 @@ export default function User() {
       {toggle && <Toggle toggle={toggle} setToggle={settoggle} />}
       <div className="bg-opacity-20 shadow-lg flex justify-center">
         <div className="flex flex-col items-center p-10 backdrop-blur-sm rounded-xl shadow-lg text-center md:flex-row md:items-start md:text-left gap-10">
-          {/* Profile Avatar */}
-          <div className="w-full md:w-auto flex items-center md:justify-start">
+          <div className="w-full md:w-auto flex items-center md:justify-start justify-center">
             {detail?.Avatar ? (
               <img
                 src={detail?.Avatar}
@@ -68,7 +67,6 @@ export default function User() {
             )}
           </div>
 
-          {/* User Info */}
           <div className="flex-1 flex flex-col gap-3 text-center md:text-left">
             <h1 className="text-3xl font-bold">{data?.name}</h1>
             <h2 className="text-lg text-gray-300">@{detail?.username}</h2>
@@ -102,7 +100,6 @@ export default function User() {
         </div>
       </div>
 
-      {/* Blogs */}
       <div className="mt-12">
         <h2 className="text-2xl font-semibold mb-6 border-b pb-3 flex items-center gap-2">
           <BookOpen size={24} className="text-primaryText" />
@@ -111,7 +108,7 @@ export default function User() {
 
         {blogData.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {blogData?.map((blog) => (
                 <UserBlog key={blog.$id} data={blog} />
               ))}

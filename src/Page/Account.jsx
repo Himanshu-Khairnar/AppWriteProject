@@ -78,7 +78,7 @@ export default function Account() {
   return (
     <div className="mt-10 max-w-2xl mx-auto px-6 space-y-8">
       {alert && <Alert message={alertMessage} setAlert={setAlert} />}
-      <div className="rounded-xl p-6 bg-primaryBg text-white space-y-4 shadow-lg border border-opacity-20 border-blue-300">
+      <div className="rounded-xl p-6 bg-primaryBg text-white space-y-4 shadow-lg border border-opacity-20 border-gray-600">
         <h1 className="text-2xl font-bold flex items-center">
           <span className="mr-2">👋</span> Hello, {userData?.name}!
         </h1>
@@ -132,7 +132,7 @@ export default function Account() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="rounded-xl p-6 text-white space-y-4 shadow-lg bg-opacity-20 bg-blue-900 backdrop-blur-sm border border-opacity-20 border-blue-300">
+        <div className="rounded-xl p-6 text-white space-y-4 shadow-lg bg-opacity-20  backdrop-blur-sm border border-opacity-20 border-gray-600">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +207,7 @@ export default function Account() {
           )}
         </div>
 
-        <div className="rounded-xl p-6 text-white space-y-4 shadow-lg bg-opacity-20 bg-blue-900 backdrop-blur-sm border border-opacity-20 border-blue-300">
+        <div className="rounded-xl p-6 text-white space-y-4 shadow-lg bg-opacity-20  backdrop-blur-sm border border-opacity-20 border-gray-600">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -283,7 +283,7 @@ export default function Account() {
         </div>
       </div>
 
-      <div className="rounded-xl p-6 text-white shadow-lg bg-opacity-20 bg-blue-900 backdrop-blur-sm border border-opacity-20 border-blue-300">
+      <div className="rounded-xl p-6 text-white shadow-lg bg-opacity-20  backdrop-blur-sm border border-opacity-20 border-gray-600">
         <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
