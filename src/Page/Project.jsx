@@ -34,7 +34,7 @@ export default function Home() {
   }, [currentPage]);
 
   return (
-    <div className="mt-10 px-4 sm:px-6 lg:px-12">
+    <div className="mt-10">
       <Heading data={"PROJECTS"} />
 
       <RecentBlog type={"project"} />
