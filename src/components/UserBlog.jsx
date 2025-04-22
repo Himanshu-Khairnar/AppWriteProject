@@ -41,10 +41,9 @@ const deleteBLog = async () => {
               className="flex items-center gap-2 group"
             >
               <h2 className="text-lg font-semibold">{data?.title}</h2>
-              <MoveUpRight className="w-5 h-5 text-gray-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <MoveUpRight className="group-hover:text-purple-400 w-5 h-5 text-gray-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </Link>
 
-            {/* Edit + Delete buttons */}
             <div className="flex gap-2">
               <Link
                 to={`/updateBlog?id=${data?.$id}`}

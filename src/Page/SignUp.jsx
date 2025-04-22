@@ -48,7 +48,6 @@ export default function SignUp() {
           </p>
         </div>
 
-        {/* Full Name */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-1">
             Full Name*
@@ -67,7 +66,6 @@ export default function SignUp() {
           </p>
         </div>
 
-        {/* Email */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
             Email*
@@ -91,7 +89,6 @@ export default function SignUp() {
           </p>
         </div>
 
-        {/* Password */}
         <div>
           <label htmlFor="password" className="block text-sm font-medium mb-1">
             Password*
@@ -119,7 +116,6 @@ export default function SignUp() {
           </p>
         </div>
 
-        {/* Confirm Password */}
         <div>
           <label
             htmlFor="confirmPassword"
@@ -145,7 +141,6 @@ export default function SignUp() {
           </p>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-base font-medium rounded-lg text-white bg-primaryText hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primaryText transition-all duration-200"
@@ -161,7 +156,6 @@ export default function SignUp() {
         </p>
       </form>
 
-      {/* Right Side Image */}
       <div className="hidden md:block md:w-1/2 p-12">
         <img
           src="signin.svg"

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function BlogCard({ data }) {
   const tags = data?.tags?.split(",") || [];
-
+  
   return (
     <Link
       to={`/viewblog?id=${data?.$id}`}
@@ -29,7 +29,7 @@ export default function BlogCard({ data }) {
 
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">{data?.title}</h2>
-            <MoveUpRight className="w-5 h-5 text-gray-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+            <MoveUpRight className="w-5 h-5 text-gray-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-purple-400" />
           </div>
 
           <div

@@ -207,7 +207,6 @@ export default function Account() {
           )}
         </div>
 
-        {/* Update Password */}
         <div className="rounded-xl p-6 text-white space-y-4 shadow-lg bg-opacity-20 bg-blue-900 backdrop-blur-sm border border-opacity-20 border-blue-300">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <svg
@@ -284,7 +283,6 @@ export default function Account() {
         </div>
       </div>
 
-      {/* Session Info */}
       <div className="rounded-xl p-6 text-white shadow-lg bg-opacity-20 bg-blue-900 backdrop-blur-sm border border-opacity-20 border-blue-300">
         <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
           <svg
@@ -368,7 +366,6 @@ export default function Account() {
         )}
       </div>
 
-      {/* Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
         <button
           className="bg-red-700 hover:bg-red-800 px-6 py-3 rounded-lg text-white w-full transition-colors duration-200 font-medium flex items-center justify-center gap-2"

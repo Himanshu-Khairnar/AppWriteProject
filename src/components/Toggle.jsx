@@ -152,7 +152,6 @@ export default function Toggle({ toggle, setToggle }) {
                 />
               </div>
 
-              {/* Buttons */}
               <div className="flex justify-end gap-3 border-t pt-4 border-gray-200 dark:border-gray-600">
                 <button
                   type="submit"

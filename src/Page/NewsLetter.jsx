@@ -1,12 +1,5 @@
-import { useState } from "react";
-import EmailService from "../config/EmailService.js";
-
 export default function NewsLetter() {
-  const [email, setEmail] = useState("");
-  const subscribe =async () => {
-         const response = await EmailService.sendWelcomeEmail(email, "User");
 
-  };
   return (
     <div className="mt-10 flex flex-col items-center justify-center w-full gap-2 px-4 text-center">
       <p className="text-primaryText font-semibold">NewsLetter</p>
@@ -23,12 +16,9 @@ export default function NewsLetter() {
           type="email"
           className="py-3 px-4 outline-none w-full sm:w-[450px] bg-white text-black rounded-lg border-2"
           placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
         />
         <button
           className="hover:opacity-90 transition-all py-3 px-4 bg-primaryText rounded-lg w-full sm:w-auto"
-          onClick={() => subscribe()}
         >
           Subscribe
         </button>

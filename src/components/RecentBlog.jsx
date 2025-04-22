@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 export default function RecentBlog({ type }) {
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const getRecentBlogs = async () => {
       try {
@@ -31,20 +32,62 @@ export default function RecentBlog({ type }) {
 
   const extractTags = (index) => recentBlogs[index]?.tags?.split(",") || [];
 
-  const Skeleton = () => (
-    <div className="animate-pulse bg-neutral-800 rounded-lg h-64 w-full" />
-  );
+  // Skeletons
+  const SkeletonCard = ({ type = "large" }) => {
+    const base = "bg-neutral-800 rounded animate-pulse";
+    return type === "large" ? (
+      <div className="border border-gray-700 rounded-lg w-full overflow-hidden">
+        <div className={`${base} h-64 w-full`} />
+        <div className="p-5 space-y-2">
+          <div className={`${base} h-4 w-1/4`} />
+          <div className={`${base} h-6 w-2/3`} />
+          <div className={`${base} h-4 w-full`} />
+          <div className="flex gap-2 mt-3">
+            <div className={`${base} h-6 w-16 rounded-full`} />
+            <div className={`${base} h-6 w-16 rounded-full`} />
+          </div>
+        </div>
+      </div>
+    ) : type === "medium" ? (
+      <div className="border border-gray-700 rounded-lg flex overflow-hidden w-full">
+        <div className={`${base} w-1/2 h-auto`} />
+        <div className="p-4 w-1/2 space-y-2">
+          <div className={`${base} h-4 w-1/3`} />
+          <div className={`${base} h-6 w-3/4`} />
+          <div className={`${base} h-4 w-full`} />
+          <div className="flex gap-2 mt-2">
+            <div className={`${base} h-6 w-12 rounded-full`} />
+            <div className={`${base} h-6 w-12 rounded-full`} />
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div className="border border-gray-700 rounded-lg w-full flex flex-col lg:flex-row overflow-hidden">
+        <div className={`${base} h-48 w-full lg:w-1/2`} />
+        <div className="p-5 space-y-2 lg:w-1/2">
+          <div className={`${base} h-4 w-1/4`} />
+          <div className={`${base} h-6 w-2/3`} />
+          <div className={`${base} h-4 w-full`} />
+          <div className="flex gap-2 mt-3">
+            <div className={`${base} h-6 w-16 rounded-full`} />
+            <div className={`${base} h-6 w-16 rounded-full`} />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="text-white py-10">
       <h2 className="text-3xl font-bold mb-8">Recent Blog Posts</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Main Blog Card */}
         <div className="hover:shadow-md overflow-hidden hover:scale-[1.01] border-gray-700 border rounded-lg transition-all duration-300 group">
           {isLoading || !recentBlogs[0] ? (
-            <Skeleton />
+            <SkeletonCard type="large" />
           ) : (
-            <>
+            <>  
               <img
                 src={recentBlogs[0]?.featured_image}
                 alt={recentBlogs[0]?.title}
@@ -64,7 +107,9 @@ export default function RecentBlog({ type }) {
                   />
                 </div>
                 <div
-                  dangerouslySetInnerHTML={{ __html: recentBlogs[0]?.content }}
+                  dangerouslySetInnerHTML={{
+                    __html: recentBlogs[0]?.content,
+                  }}
                   className="text-sm text-gray-400 mt-2 line-clamp-2"
                 />
                 <div className="flex flex-wrap gap-2 mt-4">
@@ -82,6 +127,7 @@ export default function RecentBlog({ type }) {
           )}
         </div>
 
+        {/* Two Medium Cards */}
         <div className="flex flex-col gap-8">
           {[1, 2].map((index) => (
             <div
@@ -89,7 +135,7 @@ export default function RecentBlog({ type }) {
               className="border-gray-700 border rounded-lg flex hover:shadow-md overflow-hidden hover:scale-[1.01] transition-all duration-300 group"
             >
               {isLoading || !recentBlogs[index] ? (
-                <Skeleton />
+                <SkeletonCard type="medium" />
               ) : (
                 <>
                   <img
@@ -127,9 +173,10 @@ export default function RecentBlog({ type }) {
           ))}
         </div>
 
+        {/* Last Wide Card */}
         <div className="border-gray-700 border rounded-lg lg:col-span-2 hover:shadow-lg overflow-hidden hover:scale-[1.01] transition-all duration-300 group flex flex-col lg:flex-row">
           {isLoading || !recentBlogs[3] ? (
-            <Skeleton />
+            <SkeletonCard type="wide" />
           ) : (
             <>
               <img
@@ -145,10 +192,11 @@ export default function RecentBlog({ type }) {
                   {recentBlogs[3]?.title}
                 </h3>
                 <div
-                  dangerouslySetInnerHTML={{ __html: recentBlogs[3]?.content }}
+                  dangerouslySetInnerHTML={{
+                    __html: recentBlogs[3]?.content,
+                  }}
                   className="text-[15px] text-gray-400 line-clamp-2 h-[48px]"
                 />
-
                 <div className="flex flex-wrap gap-2 mt-4">
                   {extractTags(3).map((tag, i) => (
                     <span
