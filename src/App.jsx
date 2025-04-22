@@ -51,8 +51,6 @@ export default function App() {
     <div className="bg-primaryBg text-white min-h-screen px-6 md:px-12 lg:px-24 py-12">
       <BrowserRouter>
         <Header />
-        <p>{data?.name}</p>
-        <p>{data2?.Github}</p>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/project" element={<Project />} />

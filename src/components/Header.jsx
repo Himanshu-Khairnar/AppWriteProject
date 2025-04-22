@@ -31,7 +31,7 @@ export default function Header() {
 
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between ">
+    <div className="flex flex-col lg:flex-row items-center justify-between  ">
       <div className="flex justify-between w-full lg:w-auto items-center">
         <Link to="/">
           <img src="blogger.png" className="h-12 w-12" />

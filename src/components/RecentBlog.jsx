@@ -141,7 +141,7 @@ export default function RecentBlog({ type }) {
                   <img
                     src={recentBlogs[index]?.featured_image}
                     alt={recentBlogs[index]?.title}
-                    className="w-1/2 h-full rounded object-cover group-hover:brightness-90 transition"
+                    className="w-1/2 h-[200px] rounded object-cover group-hover:brightness-90 transition"
                   />
                   <div className="p-4">
                     <p className="text-purple-400 font-semibold mb-1">
