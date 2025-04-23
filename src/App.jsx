@@ -1,29 +1,30 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  Home,
+  Project,
+  NewsLetter,
+  About,
+  SignUp,
+  Login,
+  NotFoundPage,
+  User,
+  UserDetails,
+  CreateBlog,
+  Account,
+  UpdateBlog,
+  BlogPage,
+  SearchPage,
+} from './Page/index.js'
 import Header from "./components/Header";
-import Home from "./Page/Home";
 import Footer from "./components/Footer";
-import Project from "./Page/Project";
-import NewsLetter from "./Page/NewsLetter";
-import About from "./Page/About";
-import SignUp from "./Page/SignUp";
-import Login from "./Page/Login";
-import NotFoundPage from "./Page/NotFound";
-import User from "./Page/User";
 import { logOut, userDetails } from "./redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccount, getUserDetails } from "./appwrite/User";
 import { login } from "./redux/authSlice";
 import { useEffect, useState } from "react";
-import UserDetails from "./Page/UserDetails";
-import CreateBlog from "./Page/CreateBlog";
-import Account from "./Page/Account";
-import UpdateBlog from "./Page/UpdateBlog";
-import BlogPage from "./Page/BlogPage";
-import SearchPage from "./Page/SearchPage";
 
 export default function App() {
-  const [data, setData] = useState(null);
-  const [data2, setData2] = useState(null);
+
   const dispatch = useDispatch();
   useEffect(() => {
     const getAccountDetails = async () => {
@@ -59,7 +60,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path={`/myblogs`} element={<User />} />
           <Route path={`/viewBlog`} element={<BlogPage />} />
-      <Route path={`/searchBlog`} element={<SearchPage/>} />
+          <Route path={`/searchBlog`} element={<SearchPage/>} />
           <Route path="/adduserdetails" element={<UserDetails />} />
           <Route path="/updateBlog" element={<UpdateBlog />} />
           <Route path="/createBlog" element={<CreateBlog />} />
