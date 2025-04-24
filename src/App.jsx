@@ -18,10 +18,10 @@ import {
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { logOut, userDetails } from "./redux/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAccount, getUserDetails } from "./appwrite/User";
 import { login } from "./redux/authSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function App() {
 

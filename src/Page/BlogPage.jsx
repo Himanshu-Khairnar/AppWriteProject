@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { checkLike, GettingBlog } from "../appwrite/Blogs";
 import { Binoculars, ThumbsUp } from "lucide-react";
 import { disLike, addLike, addView } from "../appwrite/Blogs";
@@ -124,12 +124,13 @@ export default function BlogPage() {
 
       <div className="flex flex-wrap gap-2 mb-8">
         {tags.map((tag, index) => (
-          <span
+          <Link
+            to={`/searchBlog?q=${tag.toLowerCase().trim()}`}
             key={index}
             className="text-sm px-3 py-1 rounded-full bg-white text-gray-800 font-medium border border-gray-700 hover:bg-purple-500 hover:text-white transition"
           >
             #{tag.trim()}
-          </span>
+          </Link>
         ))}
       </div>
 
