@@ -26,6 +26,8 @@ export default function SignUp() {
     if (res) {
       const log = await login(data.email,data.password)
        await dispatch(AuthLogin(log));
+       console.log(log);
+       
       navigate("/adduserdetails");
 
       window.location.reload();

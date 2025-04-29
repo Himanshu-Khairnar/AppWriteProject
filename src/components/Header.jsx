@@ -11,7 +11,6 @@ export default function Header() {
     { name: "Blog", link: "/" },
     { name: "Projects", link: "/project" },
     { name: "Create Blog", link: "/createBlog" },
-    { name: "My Blogs", link: "/myblogs" },
   ];
   if (user) {
     data = [...data, { name: "My Blogs ", link: "/myblogs" }];

@@ -36,10 +36,8 @@ export default function App() {
 
         await dispatch(userDetails(res2.documents[0]));
 
-        setData2(res);
       } catch (error) {
         await dispatch(logOut());
-        setData(null);
       }
     };
     getAccountDetails();
