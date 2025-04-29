@@ -106,10 +106,10 @@ export default function User() {
           Blogs & Projects
         </h2>
 
-        {blogData.length > 0 ? (
+        {currentBlogs.length > 0 ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogData?.map((blog) => (
+              {currentBlogs?.map((blog) => (
                 <UserBlog key={blog.$id} data={blog} />
               ))}
             </div>
