@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MoveUpRight,
   Github,
@@ -10,10 +10,16 @@ import {
 } from "lucide-react";
 import Toggle from "../components/Toggle";
 import { GetUserBlog } from "../appwrite/Blogs";
-import BlogCard from "../components/BlogCard";
 import UserBlog from "../components/UserBlog";
 
 export default function User() {
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.authSlice.userData);
+  console.log(userData);
+
+  useEffect(() => {
+    if (userData === null) navigate("/login");
+  }, [userData]);
   const [toggle, settoggle] = useState(false);
   const data = useSelector((state) => state.authSlice?.userData);
   const detail = useSelector((state) => state.authSlice?.userDetail);

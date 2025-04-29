@@ -29,6 +29,7 @@ export default function Account() {
     await logout();
     dispatch(reduxLogout());
     navigate("/");
+    window.location.reload()
   };
 
   useEffect(() => {

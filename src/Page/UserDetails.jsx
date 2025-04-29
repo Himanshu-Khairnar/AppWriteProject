@@ -45,6 +45,8 @@ export default function UserDetails() {
   }, [avatarFile]);
 
   const onSubmit = async (data) => {
+    console.log(data);
+    
     const isUsernameUnique = await isSlugUnique(data.username);
     if (isUsernameUnique) {
       const res = await createUserDetails(data);
