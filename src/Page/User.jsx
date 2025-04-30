@@ -46,7 +46,7 @@ export default function User() {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 400, behavior: "smooth" });
   }, [currentPage]);
 
   return (

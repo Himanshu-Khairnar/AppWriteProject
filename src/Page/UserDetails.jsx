@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserDetails, isSlugUnique } from "../appwrite/User";
 import { useNavigate } from "react-router";
 import { userDetails } from "../redux/authSlice";
+import { RefreshCcw } from "lucide-react";
 export default function UserDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +35,13 @@ export default function UserDetails() {
   setValue("userId", userData?.$id);
 
   const avatarFile = watch("avatar");
-
+  const changeName = () => {
+    const randomString = Math.random().toString(36).substring(2, 8);
+    const value = `${userData?.name
+      .toLowerCase()
+      .replace(/\s+/g, "-")}-${randomString}`;
+    setValue("username", value);
+  };
   useEffect(() => {
     if (avatarFile && avatarFile.length > 0) {
       const file = avatarFile[0];
@@ -68,23 +75,28 @@ export default function UserDetails() {
           <label htmlFor="username" className="block mb-1 font-medium">
             @Username
           </label>
-          <input
-            id="username"
-            placeholder="Himanshu Khairnar"
-            type="text"
-            {...register("username", {
-              required: "username is required",
-              minLength: {
-                value: 4,
-                message: "username is below 4 characters",
-              },
-              maxLength: {
-                value: 100,
-                message: "username should be under 100 character",
-              },
-            })}
-            className="bg-secondaryBg p-3 outline-gray-400 border-none w-full rounded-lg shadow-sm"
-          />
+          <div className="flex bg-secondaryBg p-2 rounded-lg shadow-sm hover:outline-white hover:border-2">
+            <input
+              id="username"
+              placeholder="Himanshu Khairnar"
+              type="text"
+              {...register("username", {
+                required: "username is required",
+                minLength: {
+                  value: 4,
+                  message: "username is below 4 characters",
+                },
+                maxLength: {
+                  value: 100,
+                  message: "username should be under 100 character",
+                },
+              })}
+              className=" p-1 borde-none outline-none  w-full "
+            />
+            <button type="button" onClick={() => changeName()}>
+              <RefreshCcw />
+            </button>
+          </div>
           <p className="text-red-500 text-xs mt-1 h-4">
             {errors.username?.message && "*" + errors.username?.message}
           </p>
