@@ -15,7 +15,6 @@ import UserBlog from "../components/UserBlog";
 export default function User() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.authSlice.userData);
-  console.log(userData);
 
   useEffect(() => {
     if (userData === null) navigate("/login");
@@ -45,9 +44,9 @@ export default function User() {
     userBlog();
   }, []);
 
-  useEffect(() => {
-    window.scrollTo({ top: 400, behavior: "smooth" });
-  }, [currentPage]);
+  // useEffect(() => {
+  //   window.scrollTo({ top: 400, behavior: "smooth" });
+  // }, [currentPage]);
 
   return (
     <div className="mt-10 relative">
@@ -123,9 +122,10 @@ export default function User() {
             {blogData.length > blogsPerPage && (
               <div className="flex justify-center items-center mt-10 gap-4">
                 <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
+                  onClick={() => {
+                    setCurrentPage((prev) => Math.max(prev - 1, 1));
+                    window.scrollTo({ top: 1100, behavior: "smooth" });
+                  }}
                   disabled={currentPage === 1}
                   className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
                 >
@@ -137,9 +137,10 @@ export default function User() {
                 </span>
 
                 <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
+                  onClick={() => {
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                    window.scrollTo({ top: 1100, behavior: "smooth" });
+                  }}
                   disabled={currentPage === totalPages}
                   className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
                 >

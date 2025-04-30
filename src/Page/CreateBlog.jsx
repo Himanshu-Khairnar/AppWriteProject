@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router';
 export default function CreateBlog() {
   const navigate = useNavigate()
   const userData = useSelector((state) => state.authSlice.userData) ;
-  console.log(userData);
   
   useEffect(()=>{
       if (userData === null) navigate("/login");

@@ -23,14 +23,13 @@ export default function Home() {
   useEffect(() => {
     const getAllBlogs = async () => {
       const res = await GettingAllBlog("blog");
+      console.log(res.documents);
+      
       dispatch(AllBlogsData(res.documents));
     };
     getAllBlogs();
   }, [dispatch]);
 
-  useEffect(() => {
-    window.scrollTo({ top:1100 , behavior: "smooth" });
-  }, [currentPage]);
 
   return (
     <div className="mt-10 ">
@@ -52,7 +51,10 @@ export default function Home() {
         {blogData.length > blogsPerPage && (
           <div className="flex justify-center items-center mt-10 gap-4">
             <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              onClick={() => {
+                setCurrentPage((prev) => Math.max(prev - 1, 1));
+                window.scrollTo({ top: 500, behavior: "smooth" });
+              }}
               disabled={currentPage === 1}
               className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
             >
@@ -64,9 +66,10 @@ export default function Home() {
             </span>
 
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
+              onClick={() => {
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                window.scrollTo({ top: 500, behavior: "smooth" });
+              }}
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
             >

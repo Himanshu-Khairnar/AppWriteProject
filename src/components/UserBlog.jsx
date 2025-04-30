@@ -10,7 +10,6 @@ const deleteBLog = async () => {
    const res = await DeletingBlog(data?.$id);
    if (res) window.location.reload();
  };
- console.log(data);
  
   return (
     <div className="max-w-[384px] overflow-hidden text-white transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg group border border-gray-700 rounded-lg relative">

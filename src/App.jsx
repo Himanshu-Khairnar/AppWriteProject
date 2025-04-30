@@ -14,7 +14,7 @@ import {
   UpdateBlog,
   BlogPage,
   SearchPage,
-} from './Page/index.js'
+} from "./Page/index.js";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { logOut, userDetails } from "./redux/authSlice";
@@ -22,9 +22,9 @@ import { useDispatch } from "react-redux";
 import { getAccount, getUserDetails } from "./appwrite/User";
 import { login } from "./redux/authSlice";
 import { useEffect } from "react";
+import { GettingAllBlog } from "./appwrite/Blogs.js";
 
 export default function App() {
-
   const dispatch = useDispatch();
   useEffect(() => {
     const getAccountDetails = async () => {
@@ -35,11 +35,18 @@ export default function App() {
         const res2 = await getUserDetails(res.$id);
 
         await dispatch(userDetails(res2.documents[0]));
-
       } catch (error) {
         await dispatch(logOut());
       }
     };
+    const getAllBlogs = async () => {
+      const res = await GettingAllBlog("blog");
+      console.log(res.documents);
+
+      await dispatch(AllBlogsData(res.documents));
+    };
+    getAllBlogs();
+
     getAccountDetails();
     return () => {
       getAccountDetails();
@@ -58,7 +65,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path={`/myblogs`} element={<User />} />
           <Route path={`/viewBlog`} element={<BlogPage />} />
-          <Route path={`/searchBlog`} element={<SearchPage/>} />
+          <Route path={`/searchBlog`} element={<SearchPage />} />
           <Route path="/adduserdetails" element={<UserDetails />} />
           <Route path="/updateBlog" element={<UpdateBlog />} />
           <Route path="/createBlog" element={<CreateBlog />} />

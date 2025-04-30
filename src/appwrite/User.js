@@ -84,9 +84,7 @@ export const createUserDetails = async (data) => {
   }
 };
 export const updateUserDetails = async (data) => {
-  try {
-    console.log(data);
-    
+  try {  
     let url
     if (data?.avatar) {
     let   image = await storage.createFile(bucketId, ID.unique(), data?.avatar[0]);
